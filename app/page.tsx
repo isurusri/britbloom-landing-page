@@ -1,13 +1,22 @@
 import Link from "next/link";
+import Hero from "./hero";
+
+import styles from "./page.module.scss";
 
 const Home = () => {
 	return (
-		<div>
-			<h1>Home</h1>
-			<p>Hello World! This is the Home page</p>
-			<p>
-				Visit the <Link href="/about">About</Link> page.
-			</p>
+		<div className={styles["page"]}>
+			<header className={styles["page__header"]}>
+				<span className={styles["page__header-i-about"]}>ABOUT</span>
+				<span className={styles["page__header-i-contact"]}>CONTACT</span>
+				<span className={styles["page__header-i-branding"]}>BRITBLOOMS</span>
+				<span className={styles["page__header-i-shop"]}>
+					<span className={styles["shop-now"]}>SHOP NOW</span>
+				</span>
+			</header>
+			<section id="hero">
+				<Hero />
+			</section>
 		</div>
 	);
 };

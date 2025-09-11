@@ -1,0 +1,46 @@
+.page {
+	&__header {
+		margin: 2.8rem 2.8rem;
+
+		position: fixed;
+		left: 0;
+		right: 0;
+
+		display: grid;
+		grid-template-columns: repeat(8, 1fr);
+
+		font-size: 1.4rem;
+
+		&-i-about {
+			grid-column: 1 / 2;
+		}
+
+		&-i-contact {
+			grid-column: 2 / 3;
+		}
+
+		&-i-branding {
+			position: absolute;
+			inset: 0;
+
+			display: flex;
+			justify-content: center;
+
+			pointer-events: none;
+		}
+
+		&-i-shop {
+			grid-column: 7 / 9;
+			text-align: end;
+		}
+	}
+
+	section {
+	}
+}
+
+.shop-now {
+	padding: 0.2em 0.6em;
+	border-radius: 2em;
+	border: 2px solid var(--color-accent);
+}
