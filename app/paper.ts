@@ -8,6 +8,8 @@ import {
 	createProgramInfo,
 	drawBufferInfo,
 	createBufferFromArray,
+	CreateTextureInfo,
+	createTextureAsync,
 } from "twgl.js";
 
 const vs = `
@@ -25,12 +27,30 @@ const vs = `
 const fs = `
 	precision mediump float;
 
+	varying vec2 vUv;
+
+	struct Texture {
+		sampler2D texture;
+		vec2 repeat;
+		vec2 offset;
+	};
+
+	uniform Texture textures[1];
+
+	vec2 uv(Texture texture) {
+		return vUv * texture.repeat - texture.offset;
+	}
+
 	void main() {
-		gl_FragColor = vec4(vec3(1.), 1.);
+		vec3 texture = texture2D(textures[0].texture, uv(textures[0])).rgb;
+		vec3 color = mix(texture, vec3(0.0431, 0.2353, 0.2863), .5);
+		gl_FragColor = vec4(color, 1.);
 	}
 `;
 
-type Uniforms = {};
+type Uniforms = {
+	textures: Texture[];
+};
 
 export class Paper {
 	canvas: Canvas;
@@ -53,11 +73,36 @@ export class Paper {
 		this.quad.draw(this.shader);
 	}
 
+	async setTexture(src: string, repeat: number[], offset: number[]) {
+		const textureInfo = await createTextureAsync(this.canvas.gl, {
+			src,
+			min: this.canvas.gl.LINEAR,
+			mag: this.canvas.gl.LINEAR,
+		});
+
+		this.shader.uniforms.textures = [
+			{
+				texture: textureInfo.texture,
+				repeat,
+				offset,
+			},
+		];
+
+		this.shader.updateUniforms();
+		this.quad.draw(this.shader);
+	}
+
 	dispose() {}
 
 	get domElement() {
 		return this.canvas.domElement;
 	}
+}
+
+export interface Texture {
+	texture: CreateTextureInfo;
+	repeat: number[];
+	offset: number[];
 }
 
 enum CanvasErrorCodes {

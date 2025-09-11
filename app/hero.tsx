@@ -19,6 +19,8 @@ export default function Hero() {
 
 		paper.current.init();
 
+		paper.current.setTexture("/images/bg.png", [1, 1440 / clientWidth], [0, -0.1]);
+
 		return () => {
 			if (paper.current) {
 				paper.current.dispose();
