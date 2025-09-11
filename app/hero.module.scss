@@ -8,6 +8,9 @@
 }
 
 .c {
+	order: 1;
+	grid-area: 1 / 1;
+
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
 	align-content: space-between;
@@ -16,9 +19,6 @@
 	padding-top: 6rem;
 
 	height: 100%;
-
-	border-radius: 1.4rem;
-	background: white;
 
 	&-title {
 		grid-column: 1 / 9;
@@ -37,4 +37,14 @@
 		font-size: 2.4rem;
 		line-height: 1.2em;
 	}
+}
+
+.canvas {
+	order: 0;
+	grid-area: 1 / 1;
+
+	margin: 0;
+
+	border-radius: 1.4rem;
+	overflow: hidden;
 }

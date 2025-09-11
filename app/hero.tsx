@@ -1,6 +1,47 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { Paper } from "./paper";
+
 import styles from "./hero.module.scss";
 
 export default function Hero() {
+	const el = useRef<HTMLDivElement>(null);
+	const paper = useRef<Paper>(null);
+
+	useEffect(() => {
+		paper.current = new Paper();
+
+		if (!el.current) return;
+		const { clientWidth, clientHeight } = el.current;
+		paper.current.canvas.setSize(clientWidth, clientHeight);
+		el.current.appendChild(paper.current.domElement);
+
+		paper.current.init();
+
+		return () => {
+			if (paper.current) {
+				paper.current.dispose();
+				el.current?.removeChild(paper.current.domElement);
+			}
+		};
+	}, []);
+
+	useEffect(() => {
+		function handleResize() {
+			if (!el.current) return;
+			const rect = el.current.getBoundingClientRect();
+			paper.current?.canvas.setSize(rect.width, rect.height);
+			paper.current?.draw();
+		}
+
+		window.addEventListener("resize", handleResize);
+
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
+
 	return (
 		<div className={styles["wrapper"]}>
 			<div className={styles["c"]}>
@@ -18,6 +59,7 @@ export default function Hero() {
 					enthusiasts to complete beginners.
 				</span>
 			</div>
+			<div ref={el} className={styles["canvas"]}></div>
 		</div>
 	);
 }
