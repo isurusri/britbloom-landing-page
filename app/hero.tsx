@@ -19,7 +19,8 @@ export default function Hero() {
 
 		paper.current.init();
 
-		paper.current.setTexture("/images/bg.png", [1, 1440 / clientWidth], [0, -0.1]);
+		// 1216 x 2000
+		paper.current.setTexture("/images/bg2.png", [1, (1216 / 2000) * (clientHeight / clientWidth)], [0, -0.25]);
 
 		return () => {
 			if (paper.current) {

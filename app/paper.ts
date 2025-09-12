@@ -41,9 +41,15 @@ const fs = `
 		return vUv * texture.repeat - texture.offset;
 	}
 
+	float rand(vec2 c){
+		return fract(sin(dot(c.xy ,vec2(12.9898,78.233))) * 43758.5453);
+	}
+
+
 	void main() {
 		vec3 texture = texture2D(textures[0].texture, uv(textures[0])).rgb;
-		vec3 color = mix(texture, vec3(0.0431, 0.2353, 0.2863), .5);
+		// vec3 color = mix(texture, vec3(0.0431, 0.2353, 0.2863), .25);
+		vec3 color = mix(texture, vec3(1.), .2 * rand(vUv));
 		gl_FragColor = vec4(color, 1.);
 	}
 `;
