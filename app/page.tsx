@@ -10,14 +10,17 @@ const Home = () => {
 			<header className={styles["page__header"]}>
 				<span className={styles["page__header-i-about"]}>ABOUT</span>
 				<span className={styles["page__header-i-contact"]}>CONTACT</span>
-				{/*<span className={styles["page__header-i-branding"]}>BRITBLOOMS</span>*/}
-				<span className={styles["page__header-i-branding"]}>
+				<span className={styles["page__header-i-branding"]}>BRITBLOOMS</span>
+				{/*<span className={styles["page__header-i-branding"]}>
 					<Image alt="logo" src="./images/britblooms.svg" width={40} height={40}></Image>
-				</span>
+				</span>*/}
 				<span className={styles["page__header-i-shop"]}>
 					<span className={styles["shop-now"]}>SHOP NOW</span>
 				</span>
 			</header>
+			<section id="hero">
+				<Hero />
+			</section>
 			<section id="hero">
 				<Hero />
 			</section>
