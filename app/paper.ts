@@ -181,3 +181,26 @@ export class FQuad {
 		drawBufferInfo(this.gl, this.bufferInfo);
 	}
 }
+
+export function getContainRepeat(iW: number, iH: number, tW: number, tH: number) {
+	const imgAspect = iW / iH;
+	const targetAspect = tW / tH;
+
+	let repeatX, repeatY;
+	let offsetX = 0;
+	let offsetY = 0;
+
+	if (imgAspect > targetAspect) {
+		// image is wider → scale by height, crop sides
+		repeatX = targetAspect / imgAspect;
+		repeatY = 1;
+		offsetX = (1 - repeatX) / 2;
+	} else {
+		// image is taller (or same ratio) → scale by width, crop top/bottom
+		repeatX = 1;
+		repeatY = imgAspect / targetAspect;
+		offsetY = (1 - repeatY) / 2;
+	}
+
+	return { repeatX, repeatY, offsetX, offsetY };
+}

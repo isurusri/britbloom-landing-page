@@ -1,9 +1,20 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Paper } from "./paper";
+import { Paper, getContainRepeat } from "./paper";
 
 import styles from "./hero.module.scss";
+
+function getCoverScaleFactors(imgWidth: number, imgHeight: number, targetWidth: number, targetHeight: number) {
+	const scaleX = targetWidth / imgWidth;
+	const scaleY = targetHeight / imgHeight;
+	const scale = Math.min(scaleX, scaleY); // pick the larger to fully cover
+
+	return {
+		scaleX: scale,
+		scaleY: scale,
+	};
+}
 
 export default function Hero() {
 	const el = useRef<HTMLDivElement>(null);
@@ -19,8 +30,10 @@ export default function Hero() {
 
 		paper.current.init();
 
-		// 1216 x 2000
-		paper.current.setTexture("/images/bg2.png", [1, (1216 / 2000) * (clientHeight / clientWidth)], [0, -0.265]);
+		let iW = 1216,
+			iH = 2000;
+		const tscale = getContainRepeat(iW, iH, clientWidth, clientHeight);
+		paper.current.setTexture("/images/bg2.png", [tscale.repeatX, tscale.repeatY], [0, 0]);
 
 		return () => {
 			if (paper.current) {
