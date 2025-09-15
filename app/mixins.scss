@@ -1,0 +1,47 @@
+@use "sass:map";
+
+$breakpoints: (
+	"xs": 0,
+	"sm": 576px,
+	"md": 768px,
+	"lg": 992px,
+	"xl": 1200px,
+);
+
+@mixin on-min($breakpoint) {
+	@if map.has-key($breakpoints, $breakpoint) {
+		@media (min-width: map.get($breakpoints, $breakpoint)) {
+			@content;
+		}
+	} @else {
+		@warn "No value found for breakpoint: `#{$breakpoint}`.";
+	}
+}
+
+@mixin on-max($breakpoint) {
+	@if map.has-key($breakpoints, $breakpoint) {
+		@media (max-width: map.get($breakpoints, $breakpoint)) {
+			@content;
+		}
+	} @else {
+		@warn "No value found for breakpoint: `#{$breakpoint}`.";
+	}
+}
+
+@mixin v-flexk {
+	display: flex;
+	flex-direction: column;
+}
+
+@mixin h-flex {
+	display: flex;
+	flex-direction: row;
+}
+
+@mixin stack {
+	display: grid;
+
+	> * {
+		grid-area: 1 / 1;
+	}
+}

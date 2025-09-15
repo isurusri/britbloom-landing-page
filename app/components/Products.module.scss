@@ -1,0 +1,95 @@
+.products {
+	background: var(--color-secondary);
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	margin: 1rem;
+	border-radius: 1.4rem;
+	border-top: 2px solid white;
+	border-bottom: 2px solid white;
+	overflow: hidden;
+
+	&__hero {
+		// Hero section styles
+	}
+
+	&__title {
+		position: relative;
+		
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: -0.5rem;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 4rem;
+			height: 0.25rem;
+			background: var(--color-primary);
+		}
+	}
+
+	&__layout {
+		// Grid layout handled by Tailwind
+	}
+
+	&__gallery {
+		// Gallery section styles
+	}
+
+	&__content {
+		// Content section styles
+	}
+
+	&__sidebar {
+		// Sidebar styles
+	}
+
+	.gallery {
+		&__container {
+			// Gallery container styles
+		}
+
+		&__images {
+			// Gallery images grid
+		}
+
+		&__image {
+			transition: transform 0.3s ease;
+			
+			&:hover {
+				transform: scale(1.02);
+			}
+		}
+
+		&__navigation {
+			// Navigation controls
+		}
+	}
+
+	.sidebar {
+		&__image {
+			transition: transform 0.3s ease;
+			
+			&:hover {
+				transform: scale(1.02);
+			}
+		}
+
+		&__stats {
+			// Statistics grid
+		}
+
+		&__rating {
+			// Rating display
+		}
+
+		&__button {
+			transition: all 0.3s ease;
+			
+			&:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+			}
+		}
+	}
+}

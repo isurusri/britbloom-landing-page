@@ -1,0 +1,71 @@
+.contact {
+	background: linear-gradient(135deg, var(--color-neutral) 0%, var(--color-secondary) 100%);
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	margin: 1rem;
+	border-radius: 1.4rem;
+	border-top: 2px solid white;
+	border-bottom: 2px solid white;
+	overflow: hidden;
+
+	&__hero {
+		// Hero section styles
+	}
+
+	&__title {
+		position: relative;
+		
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: -0.5rem;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 4rem;
+			height: 0.25rem;
+			background: var(--color-primary);
+		}
+	}
+
+	&__main {
+		// Main contact grid
+	}
+
+	&__methods {
+		// Contact methods column
+	}
+
+	&__form {
+		// Contact form section
+	}
+
+	&__info {
+		// Business hours and FAQ section
+	}
+
+	.method {
+		&__card {
+			transition: all 0.3s ease;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+
+			&:hover {
+				transform: translateY(-4px);
+				box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+				border-color: var(--color-primary);
+			}
+		}
+	}
+
+	.hours {
+		&__card {
+			// Business hours card
+		}
+	}
+
+	.faq {
+		&__card {
+			// FAQ card
+		}
+	}
+}
