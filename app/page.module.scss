@@ -6,32 +6,26 @@
 		left: 0;
 		right: 0;
 
-		display: grid;
-		grid-template-columns: repeat(8, 1fr);
-
 		font-size: 1.4rem;
 
+		&-i-products {
+			// Products navigation link
+		}
+
 		&-i-about {
-			grid-column: 1 / 2;
+			// About navigation link
 		}
 
 		&-i-contact {
-			grid-column: 2 / 3;
+			// Contact navigation link
 		}
 
 		&-i-branding {
-			position: absolute;
-			inset: 0;
-
-			display: flex;
-			justify-content: center;
-
-			pointer-events: none;
+			// Branding/logo link
 		}
 
 		&-i-shop {
-			grid-column: 7 / 9;
-			text-align: end;
+			// Shop now button
 		}
 	}
 

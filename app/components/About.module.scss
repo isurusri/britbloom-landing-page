@@ -1,0 +1,82 @@
+.about {
+	background: var(--color-neutral);
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	margin: 1rem;
+	border-radius: 1.4rem;
+	border-top: 2px solid white;
+	border-bottom: 2px solid white;
+	overflow: hidden;
+
+	&__hero {
+		// Hero section styles
+	}
+
+	&__title {
+		position: relative;
+		
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: -0.5rem;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 4rem;
+			height: 0.25rem;
+			background: var(--color-primary);
+		}
+	}
+
+	&__content {
+		// Main content grid
+	}
+
+	&__image {
+		// Large image section
+	}
+
+	&__text {
+		// Text content section
+	}
+
+	&__features {
+		// Features list
+	}
+
+	&__stats {
+		// Statistics grid
+	}
+
+	&__team {
+		// Team section
+	}
+
+	.image {
+		&__badge {
+			animation: float 3s ease-in-out infinite;
+		}
+	}
+
+	.team {
+		&__member {
+			transition: all 0.3s ease;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+
+			&:hover {
+				transform: translateY(-8px);
+				box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+				border-color: var(--color-primary);
+			}
+		}
+	}
+}
+
+@keyframes float {
+	0%, 100% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-10px);
+	}
+}
