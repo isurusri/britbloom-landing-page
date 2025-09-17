@@ -1,51 +1,140 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Paper, getContainRepeat } from "./paper";
+import { Fluid, Canvas, Program, FQuad } from "../src/lib/fluidsim";
 
 import styles from "./hero.module.scss";
+import { PaperKernel } from "./paper";
+import { createTextureAsync } from "twgl.js";
 
 export default function Hero() {
 	const el = useRef<HTMLDivElement>(null);
-	const paper = useRef<Paper>(null);
+	const canvas = useRef<Canvas>(null);
+	const paper = useRef<PaperKernel>(null);
+	const fluid = useRef<Fluid>(null);
 
 	useEffect(() => {
-		paper.current = new Paper();
+		canvas.current = new Canvas();
 
 		if (!el.current) return;
+
+		canvas.current = new Canvas({ antialias: false });
 		const { clientWidth, clientHeight } = el.current;
-		paper.current.canvas.setSize(clientWidth, clientHeight);
-		el.current.appendChild(paper.current.domElement);
+		canvas.current.setSize(clientWidth, clientHeight);
+		el.current.appendChild(canvas.current.domElement);
 
-		paper.current.init();
+		const gl = canvas.current.gl;
+		paper.current = new PaperKernel(gl);
 
-		let iW = 1216,
-			iH = 2000;
-		const tscale = getContainRepeat(iW, iH, clientWidth, clientHeight);
-		paper.current.setTexture("/images/bg2.png", [tscale.repeatX, tscale.repeatY], [0, 0]);
+		fluid.current = new Fluid(gl, clientWidth * 0.25, clientHeight * 0.25);
+		fluid.current.initUniforms();
+
+		let fId: number;
+		function animate(time: DOMHighResTimeStamp) {
+			if (!fluid.current || !paper.current) return;
+
+			fluid.current.step();
+
+			paper.current.program.use();
+			paper.current.program.uniforms.pressure = fluid.current.pressureFBO2.object.attachments[0];
+			paper.current.draw();
+
+			fId = requestAnimationFrame(animate);
+		}
+		fId = requestAnimationFrame(animate);
+
+		function handlePointerMove({ clientX, clientY }: PointerEvent) {
+			fluid.current?.setPointer([clientX * 0.25, clientY * 0.25]);
+		}
+
+		el.current.addEventListener("pointermove", handlePointerMove);
 
 		return () => {
-			if (paper.current) {
-				paper.current.dispose();
-				el.current?.removeChild(paper.current.domElement);
-			}
+			cancelAnimationFrame(fId);
+			el.current?.removeEventListener("pointermove", handlePointerMove);
+			if (canvas.current) el.current?.removeChild(canvas.current.domElement);
 		};
 	}, []);
 
 	useEffect(() => {
-		function handleResize() {
-			if (!el.current) return;
-			const rect = el.current.getBoundingClientRect();
-			paper.current?.canvas.setSize(rect.width, rect.height);
-			paper.current?.draw();
+		async function loadTexture() {
+			if (!canvas.current) return;
+
+			const textureInfo = await createTextureAsync(canvas.current.gl, {
+				src: "/images/bg2.png",
+				min: canvas.current.gl.LINEAR,
+				mag: canvas.current.gl.LINEAR,
+			});
+
+			if (paper.current) {
+				paper.current.program.use();
+				paper.current.program.uniforms.textures = [
+					{
+						texture: textureInfo.texture,
+						repeat: [1, 1],
+						offset: [0, 0],
+					},
+				];
+				paper.current.draw();
+			}
 		}
 
-		window.addEventListener("resize", handleResize);
-
-		return () => {
-			window.removeEventListener("resize", handleResize);
-		};
+		loadTexture();
 	}, []);
+
+	// useEffect(() => {
+	// 	canvas.current = new Canvas();
+
+	// if (!el.current) return;
+	// 	const { clientWidth, clientHeight } = el.current;
+	// 	canvas.current.canvas.setSize(clientWidth, clientHeight);
+	// 	el.current.appendChild(canvas.current.domElement);
+
+	// 	canvas.current.init();
+
+	// 	let iW = 1216,
+	// 		iH = 2000;
+	// 	const tscale = getContainRepeat(iW, iH, clientWidth, clientHeight);
+	// 	canvas.current.setTexture("/images/bg2.png", [tscale.repeatX, tscale.repeatY], [0, 0]);
+
+	// 	let fId: number;
+	// 	function animate(time: DOMHighResTimeStamp) {
+	// 		if (!fluid.current) return;
+	// 		fluid.current.step();
+
+	// 		outProgram.use();
+	// 		outProgram.uniforms.pressure = fluid.current.pressureFBO2.object.attachments[0];
+	// 		outProgram.uniforms.velocity = fluid.current.velocityFBO2.object.attachments[0];
+	// 		outProgram.updateUniforms();
+	// 		bindFramebufferInfo(gl, null);
+	// 		mesh.draw(outProgram);
+
+	// 		fId = requestAnimationFrame(animate);
+	// 	}
+	// 	fId = requestAnimationFrame(animate);
+
+	// 	return () => {
+	// 		if (canvas.current) {
+	// 			canvas.current.dispose();
+	// 			el.current?.removeChild(canvas.current.domElement);
+	// 		}
+	// 	};
+	// }, []);
+
+	// useEffect(() => {
+	// 	function handleResize() {
+	// 		if (!el.current) return;
+	// 		const rect = el.current.getBoundingClientRect();
+	// 		canvas.current?.canvas.setSize(rect.width, rect.height);
+	// 		canvas.current?.draw();
+	// 	}
+
+	// 	window.addEventListener("resize", handleResize);
+
+	// 	return () => {
+	// 		window.removeEventListener("resize", handleResize);
+	// 	};
+	// }, []);
 
 	return (
 		<div className={styles["wrapper"]}>
