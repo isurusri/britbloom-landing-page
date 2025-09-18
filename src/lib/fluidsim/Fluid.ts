@@ -72,7 +72,7 @@ export class Fluid {
 		this.options = {
 			iterations: 32,
 			mouseForce: 1,
-			cursorSize: 50,
+			cursorSize: 38,
 			step: 1 / 60,
 		};
 

@@ -56,7 +56,7 @@ const fs = `
 	void main() {
 		vec3 nPressure = computeNormalDeriv(pressure, vUv);
 		nPressure.xy = nPressure.xy * 2. - 1.;
-		vec3 texture = texture2D(textures[0].texture, uv(textures[0]) + nPressure.xy).rgb;
+		vec3 texture = texture2D(textures[0].texture, uv(textures[0]) - nPressure.xy).rgb;
 		vec3 color = mix(texture, vec3(1.), .2 * hash3(vUv));
 		gl_FragColor = vec4(color, 1.);
 
@@ -81,24 +81,20 @@ export class PaperKernel extends Kernel<Uniforms> {
 }
 
 export function getContainRepeat(iW: number, iH: number, tW: number, tH: number) {
-	const imgAspect = iW / iH;
-	const targetAspect = tW / tH;
+	const iRatio = iW / iH;
+	const tRatio = tW / tH;
 
-	let repeatX, repeatY;
-	let offsetX = 0;
-	let offsetY = 0;
+	let x, y;
 
-	if (imgAspect > targetAspect) {
+	if (iRatio > tRatio) {
 		// image is wider → scale by height, crop sides
-		repeatX = targetAspect / imgAspect;
-		repeatY = 1;
-		offsetX = (1 - repeatX) / 2;
+		x = tRatio / iRatio;
+		y = 1;
 	} else {
 		// image is taller (or same ratio) → scale by width, crop top/bottom
-		repeatX = 1;
-		repeatY = imgAspect / targetAspect;
-		offsetY = (1 - repeatY) / 2;
+		x = 1;
+		y = iRatio / tRatio;
 	}
 
-	return { repeatX, repeatY, offsetX, offsetY };
+	return [x, y];
 }

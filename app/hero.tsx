@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { Fluid, Canvas, Program, FQuad } from "../src/lib/fluidsim";
 
 import styles from "./hero.module.scss";
-import { PaperKernel } from "./paper";
+import { getContainRepeat, PaperKernel } from "./paper";
 import { createTextureAsync } from "twgl.js";
 
 export default function Hero() {
@@ -43,15 +43,8 @@ export default function Hero() {
 		}
 		fId = requestAnimationFrame(animate);
 
-		function handlePointerMove({ clientX, clientY }: PointerEvent) {
-			fluid.current?.setPointer([clientX * 0.25, clientY * 0.25]);
-		}
-
-		el.current.addEventListener("pointermove", handlePointerMove);
-
 		return () => {
 			cancelAnimationFrame(fId);
-			el.current?.removeEventListener("pointermove", handlePointerMove);
 			if (canvas.current) el.current?.removeChild(canvas.current.domElement);
 		};
 	}, []);
@@ -61,18 +54,22 @@ export default function Hero() {
 			if (!canvas.current) return;
 
 			const textureInfo = await createTextureAsync(canvas.current.gl, {
-				src: "/images/bg2.png",
+				src: "/images/bg3.png",
 				min: canvas.current.gl.LINEAR,
 				mag: canvas.current.gl.LINEAR,
+				flipY: canvas.current.gl.UNPACK_FLIP_Y_WEBGL,
 			});
+
+			const { width, height } = canvas.current.domElement;
+			const repeat = getContainRepeat(1919, 1371, width, height);
 
 			if (paper.current) {
 				paper.current.program.use();
 				paper.current.program.uniforms.textures = [
 					{
 						texture: textureInfo.texture,
-						repeat: [1, 1],
 						offset: [0, 0],
+						repeat,
 					},
 				];
 				paper.current.draw();
@@ -82,59 +79,37 @@ export default function Hero() {
 		loadTexture();
 	}, []);
 
-	// useEffect(() => {
-	// 	canvas.current = new Canvas();
+	useEffect(() => {
+		function handleWindowResize() {
+			if (!el.current) return;
 
-	// if (!el.current) return;
-	// 	const { clientWidth, clientHeight } = el.current;
-	// 	canvas.current.canvas.setSize(clientWidth, clientHeight);
-	// 	el.current.appendChild(canvas.current.domElement);
+			const { clientWidth, clientHeight } = el.current;
+			canvas.current?.setSize(clientWidth, clientHeight);
+			fluid.current?.setSize(clientWidth * 0.25, clientHeight * 0.25);
+			fluid.current?.initUniforms();
 
-	// 	canvas.current.init();
+			const repeat = getContainRepeat(1919, 1371, clientWidth, clientHeight);
+			if (paper.current) paper.current.program.uniforms.textures[0].repeat = repeat;
+		}
 
-	// 	let iW = 1216,
-	// 		iH = 2000;
-	// 	const tscale = getContainRepeat(iW, iH, clientWidth, clientHeight);
-	// 	canvas.current.setTexture("/images/bg2.png", [tscale.repeatX, tscale.repeatY], [0, 0]);
+		window.addEventListener("resize", handleWindowResize);
 
-	// 	let fId: number;
-	// 	function animate(time: DOMHighResTimeStamp) {
-	// 		if (!fluid.current) return;
-	// 		fluid.current.step();
+		return () => {
+			window.removeEventListener("resize", handleWindowResize);
+		};
+	}, []);
 
-	// 		outProgram.use();
-	// 		outProgram.uniforms.pressure = fluid.current.pressureFBO2.object.attachments[0];
-	// 		outProgram.uniforms.velocity = fluid.current.velocityFBO2.object.attachments[0];
-	// 		outProgram.updateUniforms();
-	// 		bindFramebufferInfo(gl, null);
-	// 		mesh.draw(outProgram);
+	useEffect(() => {
+		function handlePointerMove({ clientX, clientY }: PointerEvent) {
+			fluid.current?.setPointer([clientX * 0.25, clientY * 0.25]);
+		}
 
-	// 		fId = requestAnimationFrame(animate);
-	// 	}
-	// 	fId = requestAnimationFrame(animate);
+		el.current?.addEventListener("pointermove", handlePointerMove);
 
-	// 	return () => {
-	// 		if (canvas.current) {
-	// 			canvas.current.dispose();
-	// 			el.current?.removeChild(canvas.current.domElement);
-	// 		}
-	// 	};
-	// }, []);
-
-	// useEffect(() => {
-	// 	function handleResize() {
-	// 		if (!el.current) return;
-	// 		const rect = el.current.getBoundingClientRect();
-	// 		canvas.current?.canvas.setSize(rect.width, rect.height);
-	// 		canvas.current?.draw();
-	// 	}
-
-	// 	window.addEventListener("resize", handleResize);
-
-	// 	return () => {
-	// 		window.removeEventListener("resize", handleResize);
-	// 	};
-	// }, []);
+		return () => {
+			el.current?.removeEventListener("pointermove", handlePointerMove);
+		};
+	}, []);
 
 	return (
 		<div className={styles["wrapper"]}>
