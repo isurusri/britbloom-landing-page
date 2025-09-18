@@ -24,6 +24,7 @@
 
 	&-title {
 		grid-column: 1 / 9;
+		z-index: 1;
 
 		margin: 0.5em 0.2em;
 
@@ -35,6 +36,7 @@
 
 	&-about {
 		grid-column: 1 / 6;
+		z-index: 1;
 
 		font-size: 2.4rem;
 		line-height: 1.2em;
