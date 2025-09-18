@@ -1,49 +1,113 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Paper, getContainRepeat } from "./paper";
+import { Fluid, Canvas, Program, FQuad } from "../src/lib/fluidsim";
 
 import styles from "./hero.module.scss";
+import { getContainRepeat, PaperKernel } from "./paper";
+import { createTextureAsync } from "twgl.js";
 
 export default function Hero() {
-	const el = useRef<HTMLDivElement>(null);
-	const paper = useRef<Paper>(null);
+	const el = useRef < HTMLDivElement > (null);
+	const canvas = useRef < Canvas > (null);
+	const paper = useRef < PaperKernel > (null);
+	const fluid = useRef < Fluid > (null);
 
 	useEffect(() => {
-		paper.current = new Paper();
+		canvas.current = new Canvas();
 
 		if (!el.current) return;
+
+		canvas.current = new Canvas({ antialias: false });
 		const { clientWidth, clientHeight } = el.current;
-		paper.current.canvas.setSize(clientWidth, clientHeight);
-		el.current.appendChild(paper.current.domElement);
+		canvas.current.setSize(clientWidth, clientHeight);
+		el.current.appendChild(canvas.current.domElement);
 
-		paper.current.init();
+		const gl = canvas.current.gl;
+		paper.current = new PaperKernel(gl);
 
-		let iW = 1216,
-			iH = 2000;
-		const tscale = getContainRepeat(iW, iH, clientWidth, clientHeight);
-		paper.current.setTexture("/images/bg2.png", [tscale.repeatX, tscale.repeatY], [0, 0]);
+		fluid.current = new Fluid(gl, clientWidth * 0.25, clientHeight * 0.25);
+		fluid.current.initUniforms();
+
+		let fId: number;
+		function animate(time: DOMHighResTimeStamp) {
+			if (!fluid.current || !paper.current) return;
+
+			fluid.current.step();
+
+			paper.current.program.use();
+			paper.current.program.uniforms.pressure = fluid.current.pressureFBO2.object.attachments[0];
+			paper.current.draw();
+
+			fId = requestAnimationFrame(animate);
+		}
+		fId = requestAnimationFrame(animate);
 
 		return () => {
-			if (paper.current) {
-				paper.current.dispose();
-				el.current?.removeChild(paper.current.domElement);
-			}
+			cancelAnimationFrame(fId);
+			if (canvas.current) el.current?.removeChild(canvas.current.domElement);
 		};
 	}, []);
 
 	useEffect(() => {
-		function handleResize() {
-			if (!el.current) return;
-			const rect = el.current.getBoundingClientRect();
-			paper.current?.canvas.setSize(rect.width, rect.height);
-			paper.current?.draw();
+		async function loadTexture() {
+			if (!canvas.current) return;
+
+			const textureInfo = await createTextureAsync(canvas.current.gl, {
+				src: "/images/bg4.jpg",
+				min: canvas.current.gl.LINEAR,
+				mag: canvas.current.gl.LINEAR,
+				flipY: canvas.current.gl.UNPACK_FLIP_Y_WEBGL,
+			});
+
+			const { width, height } = canvas.current.domElement;
+			const repeat = getContainRepeat(1919, 1371, width, height);
+
+			if (paper.current) {
+				paper.current.program.use();
+				paper.current.program.uniforms.textures = [
+					{
+						texture: textureInfo.texture,
+						offset: [0, 0],
+						repeat,
+					},
+				];
+				paper.current.draw();
+			}
 		}
 
-		window.addEventListener("resize", handleResize);
+		loadTexture();
+	}, []);
+
+	useEffect(() => {
+		function handleWindowResize() {
+			if (!el.current) return;
+
+			const { clientWidth, clientHeight } = el.current;
+			canvas.current?.setSize(clientWidth, clientHeight);
+			fluid.current?.setSize(clientWidth * 0.25, clientHeight * 0.25);
+			fluid.current?.initUniforms();
+
+			const repeat = getContainRepeat(1919, 1371, clientWidth, clientHeight);
+			if (paper.current) paper.current.program.uniforms.textures[0].repeat = repeat;
+		}
+
+		window.addEventListener("resize", handleWindowResize);
 
 		return () => {
-			window.removeEventListener("resize", handleResize);
+			window.removeEventListener("resize", handleWindowResize);
+		};
+	}, []);
+
+	useEffect(() => {
+		function handlePointerMove({ clientX, clientY }: PointerEvent) {
+			fluid.current?.setPointer([clientX * 0.25, clientY * 0.25]);
+		}
+
+		el.current?.addEventListener("pointermove", handlePointerMove);
+
+		return () => {
+			el.current?.removeEventListener("pointermove", handlePointerMove);
 		};
 	}, []);
 
