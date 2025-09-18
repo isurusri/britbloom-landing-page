@@ -77,9 +77,13 @@ export class Fluid {
 		};
 
 		// FBOs
+		const halfFloat = gl.getExtension("OES_texture_half_float");
+		if (!halfFloat) throw new Error("OES_texture_half_float not supported");
+		gl.getExtension("OES_texture_half_float_linear");
+
 		this.fboAttachmentOtions = {
 			format: gl.RGBA,
-			type: gl.FLOAT,
+			type: halfFloat.HALF_FLOAT_OES,
 			min: gl.LINEAR,
 			mag: gl.LINEAR,
 		};

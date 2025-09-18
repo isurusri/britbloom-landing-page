@@ -14,8 +14,8 @@ export class Canvas {
 		this.gl = _gl;
 
 		this.gl.getExtension("OES_standard_derivatives");
-		this.gl.getExtension("OES_texture_float_linear");
-		this.gl.getExtension("OES_texture_float");
+		this.gl.getExtension("OES_texture_half_float_linear");
+		this.gl.getExtension("OES_texture_half_float");
 
 		this.canvas = canvas;
 	}
