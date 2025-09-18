@@ -1,41 +1,4 @@
 .page {
-	&__header {
-		margin: 2.8rem 2.8rem;
-
-		position: fixed;
-		left: 0;
-		right: 0;
-
-		font-size: 1.4rem;
-
-		&-i-products {
-			// Products navigation link
-		}
-
-		&-i-about {
-			// About navigation link
-		}
-
-		&-i-contact {
-			// Contact navigation link
-		}
-
-		&-i-branding {
-			// Branding/logo link
-		}
-
-		&-i-shop {
-			// Shop now button
-		}
-	}
-
 	section {
 	}
-}
-
-.shop-now {
-	padding: 0.2em 0.6em;
-	border-radius: 2em;
-	/* border: 0.08em solid var(--color-accent); */
-	border: 0.08em solid var(--color-primary);
 }
