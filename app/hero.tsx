@@ -8,10 +8,10 @@ import { getContainRepeat, PaperKernel } from "./paper";
 import { createTextureAsync } from "twgl.js";
 
 export default function Hero() {
-	const el = useRef < HTMLDivElement > (null);
-	const canvas = useRef < Canvas > (null);
-	const paper = useRef < PaperKernel > (null);
-	const fluid = useRef < Fluid > (null);
+	const el = useRef<HTMLDivElement>(null);
+	const canvas = useRef<Canvas>(null);
+	const paper = useRef<PaperKernel>(null);
+	const fluid = useRef<Fluid>(null);
 
 	useEffect(() => {
 		canvas.current = new Canvas();
@@ -54,7 +54,7 @@ export default function Hero() {
 			if (!canvas.current) return;
 
 			const textureInfo = await createTextureAsync(canvas.current.gl, {
-				src: "/images/bg4.jpg",
+				src: "/images/bg4i.jpg",
 				min: canvas.current.gl.LINEAR,
 				mag: canvas.current.gl.LINEAR,
 				flipY: canvas.current.gl.UNPACK_FLIP_Y_WEBGL,
