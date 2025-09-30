@@ -12,7 +12,7 @@ export default function Contact() {
                             Let's Connect
                         </h2>
                         <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-                            Ready to start your aquatic journey? We're here to help you create the perfect environment for your aquatic friends.
+                            For inquiries about Britblooms services or products, whether retail or wholesale, please contact us. Let us bring you closer to nature the art of living with nature.
                         </p>
                     </div>
 
@@ -38,14 +38,14 @@ export default function Contact() {
                                 <div className="text-primary font-semibold">+44 1234 567890</div>
                             </div>
 
-                            <div className={`${styles["method__card"]} bg-white/10 backdrop-blur-sm rounded-2xl p-8`}>
+                            {/* <div className={`${styles["method__card"]} bg-white/10 backdrop-blur-sm rounded-2xl p-8`}>
                                 <div className="w-16 h-16 bg-gradient-to-br from-neutral/30 to-accent/30 rounded-2xl flex items-center justify-center mb-6">
                                     <span className="text-3xl">📍</span>
                                 </div>
                                 <h3 className="text-xl font-semibold text-white mb-3">Visit Us</h3>
                                 <p className="text-gray-300 mb-4">Come see our showroom</p>
                                 <div className="text-primary font-semibold">123 Aquatic Street<br />London, UK SW1A 1AA</div>
-                            </div>
+                            </div> */}
                         </div>
 
                         {/* Contact Form */}

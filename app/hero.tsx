@@ -54,7 +54,7 @@ export default function Hero() {
 			if (!canvas.current) return;
 
 			const textureInfo = await createTextureAsync(canvas.current.gl, {
-				src: "/images/bg4.jpg",
+				src: "/images/bg4i.jpg",
 				min: canvas.current.gl.LINEAR,
 				mag: canvas.current.gl.LINEAR,
 				flipY: canvas.current.gl.UNPACK_FLIP_Y_WEBGL,
@@ -124,8 +124,8 @@ export default function Hero() {
 					</svg>
 				</span>
 				<span className={styles["c-about"]}>
-					We specialise in high-quality pond and aquarium supplies for everyone from seasoned aquatic
-					enthusiasts to complete beginners.
+					We embrace the art of living nature bringing you closer to the beauty of
+					the natural world, whether in your indoor or outdoor spaces.
 				</span>
 			</div>
 			<div ref={el} className={styles["canvas"]}></div>
