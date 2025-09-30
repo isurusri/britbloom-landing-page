@@ -22,7 +22,7 @@
 
 	&__title {
 		position: relative;
-		
+
 		&::after {
 			content: '';
 			position: absolute;
@@ -41,6 +41,41 @@
 
 	&__gallery {
 		// Gallery section styles
+	}
+
+	.slideshow {
+		&__container {
+			// Slideshow container styles
+		}
+
+		&__main {
+			position: relative;
+			overflow: hidden;
+			transition: all 0.5s ease;
+		}
+
+		&__thumbnails {
+			// Thumbnail grid styles
+		}
+
+		&__navigation {
+			// Navigation controls
+		}
+	}
+
+	.thumbnail {
+		cursor: pointer;
+		transition: all 0.3s ease;
+		border: 2px solid transparent;
+
+		&:hover {
+			transform: scale(1.05);
+		}
+
+		&.active {
+			border-color: var(--color-primary);
+			transform: scale(1.1);
+		}
 	}
 
 	&__content {
@@ -62,7 +97,7 @@
 
 		&__image {
 			transition: transform 0.3s ease;
-			
+
 			&:hover {
 				transform: scale(1.02);
 			}
@@ -76,7 +111,7 @@
 	.sidebar {
 		&__image {
 			transition: transform 0.3s ease;
-			
+
 			&:hover {
 				transform: scale(1.02);
 			}
@@ -92,7 +127,7 @@
 
 		&__button {
 			transition: all 0.3s ease;
-			
+
 			&:hover {
 				transform: translateY(-2px);
 				box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);

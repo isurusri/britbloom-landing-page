@@ -6,6 +6,7 @@
 	width: 100%;
 	min-height: 100vh;
 }
+
 .about {
 	background: var(--color-neutral);
 	min-height: 100vh;
@@ -21,7 +22,7 @@
 
 	&__title {
 		position: relative;
-		
+
 		&::after {
 			content: '';
 			position: absolute;
@@ -38,8 +39,25 @@
 		// Main content grid
 	}
 
+	&__slideshow {
+		// Slideshow section
+	}
+
 	&__image {
 		// Large image section
+	}
+
+	.slideshow {
+		&__container {
+			position: relative;
+			overflow: hidden;
+			transition: all 0.5s ease;
+
+			// Smooth image transitions
+			img {
+				transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+		}
 	}
 
 	&__text {
@@ -79,9 +97,12 @@
 }
 
 @keyframes float {
-	0%, 100% {
+
+	0%,
+	100% {
 		transform: translateY(0px);
 	}
+
 	50% {
 		transform: translateY(-10px);
 	}

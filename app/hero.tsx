@@ -8,10 +8,10 @@ import { getContainRepeat, PaperKernel } from "./paper";
 import { createTextureAsync } from "twgl.js";
 
 export default function Hero() {
-	const el = useRef<HTMLDivElement>(null);
-	const canvas = useRef<Canvas>(null);
-	const paper = useRef<PaperKernel>(null);
-	const fluid = useRef<Fluid>(null);
+	const el = useRef < HTMLDivElement > (null);
+	const canvas = useRef < Canvas > (null);
+	const paper = useRef < PaperKernel > (null);
+	const fluid = useRef < Fluid > (null);
 
 	useEffect(() => {
 		canvas.current = new Canvas();
@@ -124,8 +124,8 @@ export default function Hero() {
 					</svg>
 				</span>
 				<span className={styles["c-about"]}>
-					We specialise in high-quality pond and aquarium supplies for everyone from seasoned aquatic
-					enthusiasts to complete beginners.
+					We embrace the art of living nature bringing you closer to the beauty of
+					the natural world, whether in your indoor or outdoor spaces.
 				</span>
 			</div>
 			<div ref={el} className={styles["canvas"]}></div>
