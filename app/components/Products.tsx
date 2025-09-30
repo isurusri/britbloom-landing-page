@@ -84,7 +84,7 @@ const products = [
         title: "Designer Water Features",
         emoji: "💧",
         image: "/images/products/fountain01.png",
-        description: "At Britblooms, we create designer water features—customized and aesthetically crafted water installations that transform homes, gardens, offices, and public spaces. Our water features go beyond simply providing flowing water; they are designed to enhance visual appeal and create ambiance.",
+        description: "At Britblooms, we create designer water features customized and aesthetically crafted water installations that transform homes, gardens, offices, and public spaces. Our water features go beyond simply providing flowing water; they are designed to enhance visual appeal and create ambiance.",
         features: [
             "⛲ Fountains in modern, classical, or abstract styles",
             "🏞️ Ponds and water gardens bringing natural serenity",
@@ -127,46 +127,46 @@ export default function Products() {
                         </p>
                     </div>
 
-                    <div className={`${styles["products__layout"]} grid grid-cols-1`}>
-                        {/* Main Section - Slideshow */}
+                    <div className={`${styles["products__layout"]} grid grid-cols-1 lg:grid-cols-2 gap-8`}>
+                        {/* Left Section - Slideshow */}
                         <div className={`${styles["products__gallery"]}`}>
-                            <div className={`${styles["slideshow__container"]} mb-6`}>
+                            <div className={`${styles["slideshow__container"]} mb-4`}>
                                 {/* Main Image Display */}
-                                <div className={`${styles["slideshow__main"]} relative rounded-2xl overflow-hidden mb-6`}>
-                                    <div className="aspect-video relative">
+                                <div className={`${styles["slideshow__main"]} relative rounded-2xl overflow-hidden mb-4`}>
+                                    <div className="aspect-[4/3] relative">
                                         <Image
                                             src={currentProduct.image}
                                             alt={currentProduct.title}
                                             fill
                                             className="object-cover transition-all duration-500"
-                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
+                                            sizes="(max-width: 768px) 100vw, 50vw"
                                         />
                                     </div>
 
                                     {/* Navigation Overlay */}
-                                    <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <div className="absolute inset-0 flex items-center justify-between p-3 opacity-0 hover:opacity-100 transition-opacity duration-300">
                                         <button
                                             onClick={prevSlide}
-                                            className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300"
+                                            className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300"
                                         >
-                                            <span className="text-xl">‹</span>
+                                            <span className="text-lg">‹</span>
                                         </button>
                                         <button
                                             onClick={nextSlide}
-                                            className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300"
+                                            className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300"
                                         >
-                                            <span className="text-xl">›</span>
+                                            <span className="text-lg">›</span>
                                         </button>
                                     </div>
                                 </div>
 
                                 {/* Thumbnail Navigation */}
-                                <div className={`${styles["slideshow__thumbnails"]} grid grid-cols-6 gap-2 mb-4`}>
+                                <div className={`${styles["slideshow__thumbnails"]} grid grid-cols-6 gap-1 mb-3`}>
                                     {products.map((product, index) => (
                                         <button
                                             key={product.id}
                                             onClick={() => goToSlide(index)}
-                                            className={`${styles["thumbnail"]} aspect-square rounded-lg overflow-hidden transition-all duration-300 ${index === currentSlide
+                                            className={`${styles["thumbnail"]} aspect-square rounded-md overflow-hidden transition-all duration-300 ${index === currentSlide
                                                 ? 'ring-2 ring-primary scale-105'
                                                 : 'opacity-60 hover:opacity-100 hover:scale-105'
                                                 }`}
@@ -192,38 +192,38 @@ export default function Products() {
                                     <div className="flex gap-2">
                                         <button
                                             onClick={prevSlide}
-                                            className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+                                            className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
                                         >
                                             ‹
                                         </button>
                                         <button
                                             onClick={nextSlide}
-                                            className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+                                            className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
                                         >
                                             ›
                                         </button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            {/* Product Content */}
-                            <div className={`${styles["products__content"]}`}>
-                                <h2 className={`${styles["products__title"]} text-4xl font-bold mb-6 text-white`}>
-                                    {currentProduct.title}
-                                </h2>
-                                <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                                    {currentProduct.description}
-                                </p>
+                        {/* Right Section - Product Content */}
+                        <div className={`${styles["products__content"]}`}>
+                            <h2 className={`${styles["products__title"]} text-3xl font-bold mb-4 text-white`}>
+                                {currentProduct.title}
+                            </h2>
+                            <p className="text-base text-gray-300 leading-relaxed mb-4">
+                                {currentProduct.description}
+                            </p>
 
-                                {/* Features List */}
-                                <div className="space-y-3">
-                                    {currentProduct.features.map((feature, index) => (
-                                        <div key={index} className="flex items-start gap-3 text-gray-300">
-                                            <span className="text-lg flex-shrink-0">{feature.split(' ')[0]}</span>
-                                            <span className="text-sm leading-relaxed">{feature.substring(feature.indexOf(' ') + 1)}</span>
-                                        </div>
-                                    ))}
-                                </div>
+                            {/* Features List */}
+                            <div className="space-y-2">
+                                {currentProduct.features.map((feature, index) => (
+                                    <div key={index} className="flex items-start gap-2 text-gray-300">
+                                        <span className="text-base flex-shrink-0">{feature.split(' ')[0]}</span>
+                                        <span className="text-sm leading-relaxed">{feature.substring(feature.indexOf(' ') + 1)}</span>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
