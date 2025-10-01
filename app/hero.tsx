@@ -100,7 +100,7 @@ export default function Hero() {
 	}, []);
 
 	useEffect(() => {
-		function handlePointerMove({ clientX, clientY }) {
+		function handlePointerMove({ clientX, clientY }: { clientX: number; clientY: number }) {
 			fluid.current?.setPointer([clientX * 0.25, clientY * 0.25]);
 		}
 
