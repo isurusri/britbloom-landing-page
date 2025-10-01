@@ -16,7 +16,7 @@ const products = [
             "💧 Soothing and relaxing – The combination of water, plants, and sometimes small animals creates a calming atmosphere",
             "🍃 Improves air quality – Live plants in the paludarium naturally purify the air",
             "🌱 Educational and inspiring – Perfect for children and adults alike",
-            "✨ Unique home décor – It's not just a habitat—it's a living art piece"
+            "✨ Unique home décor – It's not just a habitat it's a living art piece"
         ],
         gradient: "from-green-500/20 to-blue-500/20"
     },
@@ -75,7 +75,7 @@ const products = [
             "🖼️ Living or preserved botanical artworks crafted from natural moss",
             "✨ Unique, sustainable, and low-maintenance touch of greenery",
             "🏢 Perfect for home, office, or commercial spaces",
-            "💚 Promotes well-being by reducing stress and improving air quality"
+            "💚 Promotes well being by reducing stress and improving air quality"
         ],
         gradient: "from-teal-500/20 to-green-500/20"
     },

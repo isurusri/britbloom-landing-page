@@ -1,19 +1,53 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Navbar.module.scss";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isNavbarHidden, setIsNavbarHidden] = useState(false);
+    const [lastScrollY, setLastScrollY] = useState(0);
+    const [mouseY, setMouseY] = useState(0);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+
+            // Show navbar when at the top or when mouse is near top
+            if (currentScrollY < 10 || mouseY < 100) {
+                setIsNavbarHidden(false);
+            }
+            // Hide navbar when scrolling down, show when scrolling up
+            else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                setIsNavbarHidden(true);
+            } else if (currentScrollY < lastScrollY) {
+                setIsNavbarHidden(false);
+            }
+
+            setLastScrollY(currentScrollY);
+        };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            setMouseY(e.clientY);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, [lastScrollY, mouseY]);
+
     return (
         <>
-            <header className={`${styles["navbar"]} flex items-center p-2 text-white relative`}>
+            <header className={`${styles["navbar"]} ${isNavbarHidden ? styles["navbar--hidden"] : ""} flex items-center p-2 text-white relative`}>
                 {/* Left side - Desktop Navigation Links (hidden on mobile and tablet) */}
                 <div className={`${styles["navbar__links"]} hidden lg:flex gap-8 flex-1`}>
                     <a href="#products" className={`${styles["navbar__link"]} hover:text-primary transition-colors`}>PRODUCTS</a>

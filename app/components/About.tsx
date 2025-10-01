@@ -159,7 +159,7 @@ export default function About() {
                                 Our creations include paludariums, aquascaped tanks, terrariums, and vertical gardens, Premium plant designs and Moss Art , thoughtfully crafted to bring the essence of nature into your home, office, or workplace.
                             </p>
                             <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-                                As hobbyists and nature lovers, we take pride in sharing the artistry of living nature. We believe the little things matter—attention to detail, refinement, and quality are at the heart of everything we do.
+                                As hobbyists and nature lovers, we take pride in sharing the artistry of living nature. We believe the little things matter, attention to detail, refinement, and quality are at the heart of everything we do.
                             </p>
                             <div className={`${styles["about__features"]} space-y-4`}>
                                 <div className="flex items-center gap-4">

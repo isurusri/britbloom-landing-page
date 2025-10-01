@@ -29,8 +29,8 @@ export default function Hero() {
 		fluid.current = new Fluid(gl, clientWidth * 0.25, clientHeight * 0.25);
 		fluid.current.initUniforms();
 
-		let fId: number;
-		function animate(time: DOMHighResTimeStamp) {
+		let fId;
+		function animate(time) {
 			if (!fluid.current || !paper.current) return;
 
 			fluid.current.step();
@@ -100,7 +100,7 @@ export default function Hero() {
 	}, []);
 
 	useEffect(() => {
-		function handlePointerMove({ clientX, clientY }: PointerEvent) {
+		function handlePointerMove({ clientX, clientY }) {
 			fluid.current?.setPointer([clientX * 0.25, clientY * 0.25]);
 		}
 
@@ -123,10 +123,14 @@ export default function Hero() {
 						/>
 					</svg>
 				</span>
-				<span className={styles["c-about"]}>
-					We embrace the art of living nature bringing you closer to the beauty of
-					the natural world, whether in your indoor or outdoor spaces.
-				</span>
+				<div className={styles["c-content"]}>
+					<h1 className={styles["c-title-text"]}>
+						The art of living nature
+					</h1>
+					<p className={styles["c-subtitle"]}>
+						We embrace the art of living, bringing you closer to the beauty of the natural world, whether indoors or outdoors.
+					</p>
+				</div>
 			</div>
 			<div ref={el} className={styles["canvas"]}></div>
 		</div>
