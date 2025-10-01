@@ -57,7 +57,7 @@ const fs = `
 		vec3 nPressure = computeNormalDeriv(pressure, vUv);
 		nPressure.xy = nPressure.xy * 2. - 1.;
 		vec3 texture = texture2D(textures[0].texture, uv(textures[0]) - nPressure.xy).rgb;
-		vec3 color = mix(texture, vec3(1.), .2 * hash3(vUv));
+		vec3 color = mix(texture * vec3(vUv.y * 2.) - .02, vec3(1.), .2 * hash3(vUv));
 		gl_FragColor = vec4(color, 1.);
 
 	}
