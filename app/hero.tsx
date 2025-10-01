@@ -29,8 +29,8 @@ export default function Hero() {
 		fluid.current = new Fluid(gl, clientWidth * 0.25, clientHeight * 0.25);
 		fluid.current.initUniforms();
 
-		let fId;
-		function animate(time) {
+		let fId: number;
+		function animate(time: number) {
 			if (!fluid.current || !paper.current) return;
 
 			fluid.current.step();
