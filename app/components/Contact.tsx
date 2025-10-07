@@ -26,7 +26,7 @@ export default function Contact() {
                                 </div>
                                 <h3 className="text-xl font-semibold text-white mb-3">Email Us</h3>
                                 <p className="text-gray-300 mb-4">Get detailed responses within 24 hours</p>
-                                <div className="text-primary font-semibold">info@britblooms.com</div>
+                                <div className="text-primary font-semibold"><a href="mailto:info@britblooms.com">info@britblooms.com</a></div>
                             </div>
 
                             <div className={`${styles["method__card"]} bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-6`}>
@@ -35,7 +35,7 @@ export default function Contact() {
                                 </div>
                                 <h3 className="text-xl font-semibold text-white mb-3">Call Us</h3>
                                 <p className="text-gray-300 mb-4">Speak directly with our experts</p>
-                                <div className="text-primary font-semibold">+44 1234 567890</div>
+                                <div className="text-primary font-semibold"><a href="tel:+441165095161">+44 11 6509 5161</a></div>
                             </div>
 
                             {/* <div className={`${styles["method__card"]} bg-white/10 backdrop-blur-sm rounded-2xl p-8`}>

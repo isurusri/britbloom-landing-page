@@ -98,18 +98,28 @@ const products = [
 
 export default function Products() {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [isTransitioning, setIsTransitioning] = useState(false);
     const currentProduct = products[currentSlide];
 
     const nextSlide = () => {
+        if (isTransitioning) return;
+        setIsTransitioning(true);
         setCurrentSlide((prev) => (prev + 1) % products.length);
+        setTimeout(() => setIsTransitioning(false), 500);
     };
 
     const prevSlide = () => {
+        if (isTransitioning) return;
+        setIsTransitioning(true);
         setCurrentSlide((prev) => (prev - 1 + products.length) % products.length);
+        setTimeout(() => setIsTransitioning(false), 500);
     };
 
     const goToSlide = (index: number) => {
+        if (isTransitioning || index === currentSlide) return;
+        setIsTransitioning(true);
         setCurrentSlide(index);
+        setTimeout(() => setIsTransitioning(false), 500);
     };
 
     return (
@@ -134,26 +144,40 @@ export default function Products() {
                                 {/* Main Image Display */}
                                 <div className={`${styles["slideshow__main"]} relative rounded-2xl overflow-hidden mb-4`}>
                                     <div className="aspect-[4/3] relative">
-                                        <Image
-                                            src={currentProduct.image}
-                                            alt={currentProduct.title}
-                                            fill
-                                            className="object-cover transition-all duration-500"
-                                            sizes="(max-width: 768px) 100vw, 50vw"
-                                        />
+                                        <div className="relative w-full h-full">
+                                            {products.map((product, index) => (
+                                                <div
+                                                    key={product.id}
+                                                    className={`absolute inset-0 transition-all duration-500 ease-in-out ${index === currentSlide
+                                                        ? 'opacity-100 scale-100'
+                                                        : 'opacity-0 scale-105'
+                                                        }`}
+                                                >
+                                                    <Image
+                                                        src={product.image}
+                                                        alt={product.title}
+                                                        fill
+                                                        className="object-cover"
+                                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
 
                                     {/* Navigation Overlay */}
                                     <div className="absolute inset-0 flex items-center justify-between p-3 opacity-0 hover:opacity-100 transition-opacity duration-300">
                                         <button
                                             onClick={prevSlide}
-                                            className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300"
+                                            disabled={isTransitioning}
+                                            className={`w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 ${isTransitioning ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         >
                                             <span className="text-lg">‹</span>
                                         </button>
                                         <button
                                             onClick={nextSlide}
-                                            className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300"
+                                            disabled={isTransitioning}
+                                            className={`w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 ${isTransitioning ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         >
                                             <span className="text-lg">›</span>
                                         </button>
@@ -166,10 +190,11 @@ export default function Products() {
                                         <button
                                             key={product.id}
                                             onClick={() => goToSlide(index)}
+                                            disabled={isTransitioning}
                                             className={`${styles["thumbnail"]} aspect-square rounded-md overflow-hidden transition-all duration-300 ${index === currentSlide
                                                 ? 'ring-2 ring-primary scale-105'
                                                 : 'opacity-60 hover:opacity-100 hover:scale-105'
-                                                }`}
+                                                } ${isTransitioning ? 'pointer-events-none' : ''}`}
                                         >
                                             <div className="relative w-full h-full">
                                                 <Image
@@ -192,13 +217,15 @@ export default function Products() {
                                     <div className="flex gap-2">
                                         <button
                                             onClick={prevSlide}
-                                            className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+                                            disabled={isTransitioning}
+                                            className={`w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors ${isTransitioning ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         >
                                             ‹
                                         </button>
                                         <button
                                             onClick={nextSlide}
-                                            className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+                                            disabled={isTransitioning}
+                                            className={`w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors ${isTransitioning ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         >
                                             ›
                                         </button>
@@ -209,21 +236,23 @@ export default function Products() {
 
                         {/* Right Section - Product Content */}
                         <div className={`${styles["products__content"]}`}>
-                            <h2 className={`${styles["products__title"]} text-3xl font-bold mb-4 text-white`}>
-                                {currentProduct.title}
-                            </h2>
-                            <p className="text-base text-gray-300 leading-relaxed mb-4">
-                                {currentProduct.description}
-                            </p>
+                            <div className={`transition-all duration-500 ease-in-out ${isTransitioning ? 'opacity-50 transform translate-y-2' : 'opacity-100 transform translate-y-0'}`}>
+                                <h2 className={`${styles["products__title"]} text-3xl font-bold mb-4 text-white`}>
+                                    {currentProduct.title}
+                                </h2>
+                                <p className="text-base text-gray-300 leading-relaxed mb-4">
+                                    {currentProduct.description}
+                                </p>
 
-                            {/* Features List */}
-                            <div className="space-y-2">
-                                {currentProduct.features.map((feature, index) => (
-                                    <div key={index} className="flex items-start gap-2 text-gray-300">
-                                        <span className="text-base flex-shrink-0">{feature.split(' ')[0]}</span>
-                                        <span className="text-sm leading-relaxed">{feature.substring(feature.indexOf(' ') + 1)}</span>
-                                    </div>
-                                ))}
+                                {/* Features List */}
+                                <div className="space-y-2">
+                                    {currentProduct.features.map((feature, index) => (
+                                        <div key={index} className="flex items-start gap-2 text-gray-300">
+                                            <span className="text-base flex-shrink-0">{feature.split(' ')[0]}</span>
+                                            <span className="text-sm leading-relaxed">{feature.substring(feature.indexOf(' ') + 1)}</span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>

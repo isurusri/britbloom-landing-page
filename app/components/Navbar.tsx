@@ -71,9 +71,9 @@ const Navbar = () => {
                 {/* Right side - Shop Now (desktop) and Mobile Menu Button */}
                 <div className="flex items-center gap-4 ml-auto">
                     {/* Shop Now Button - Hidden on mobile and tablet */}
-                    <button className={`${styles["shop-now"]} hidden lg:block`}>
+                    <a href="/shop" className={`${styles["shop-now"]} hidden lg:block`}>
                         SHOP NOW
-                    </button>
+                    </a>
 
                     {/* Mobile Menu Button - Right side */}
                     <button
@@ -121,7 +121,7 @@ const Navbar = () => {
                         CONTACT
                     </a>
                     <div className={styles["navbar__mobile-shop"]}>
-                        <span className={styles["shop-now"]}>SHOP NOW</span>
+                        <a href="/shop" className={styles["shop-now"]}>SHOP NOW</a>
                     </div>
                 </div>
             </div>
