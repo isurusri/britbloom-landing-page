@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Fluid, Canvas, Program, FQuad } from "../src/lib/fluidsim";
 
 import styles from "./hero.module.scss";
@@ -12,12 +12,31 @@ export default function Hero() {
 	const canvas = useRef < Canvas > (null);
 	const paper = useRef < PaperKernel > (null);
 	const fluid = useRef < Fluid > (null);
+	const [isInitialized, setIsInitialized] = useState(false);
+
+	// Handle component mounting and reinitialization
+	useEffect(() => {
+		setIsInitialized(true);
+		return () => {
+			setIsInitialized(false);
+		};
+	}, []);
 
 	useEffect(() => {
-		canvas.current = new Canvas();
+		if (!isInitialized) return;
+
+		// Clean up any existing canvas
+		if (canvas.current && el.current) {
+			try {
+				el.current.removeChild(canvas.current.domElement);
+			} catch (e) {
+				// Canvas might not be attached, ignore error
+			}
+		}
 
 		if (!el.current) return;
 
+		// Create new canvas
 		canvas.current = new Canvas({ antialias: false });
 		const { clientWidth, clientHeight } = el.current;
 		canvas.current.setSize(clientWidth, clientHeight);
@@ -30,7 +49,7 @@ export default function Hero() {
 		fluid.current.initUniforms();
 
 		let fId: number;
-		function animate(time: DOMHighResTimeStamp) {
+		function animate(time: number) {
 			if (!fluid.current || !paper.current) return;
 
 			fluid.current.step();
@@ -45,9 +64,15 @@ export default function Hero() {
 
 		return () => {
 			cancelAnimationFrame(fId);
-			if (canvas.current) el.current?.removeChild(canvas.current.domElement);
+			if (canvas.current && el.current) {
+				try {
+					el.current.removeChild(canvas.current.domElement);
+				} catch (e) {
+					// Canvas might not be attached, ignore error
+				}
+			}
 		};
-	}, []);
+	}, [isInitialized]);
 
 	useEffect(() => {
 		async function loadTexture() {
@@ -77,7 +102,7 @@ export default function Hero() {
 		}
 
 		loadTexture();
-	}, []);
+	}, [isInitialized]);
 
 	useEffect(() => {
 		function handleWindowResize() {
@@ -97,10 +122,10 @@ export default function Hero() {
 		return () => {
 			window.removeEventListener("resize", handleWindowResize);
 		};
-	}, []);
+	}, [isInitialized]);
 
 	useEffect(() => {
-		function handlePointerMove({ clientX, clientY }: PointerEvent) {
+		function handlePointerMove({ clientX, clientY }: { clientX: number; clientY: number }) {
 			fluid.current?.setPointer([clientX * 0.25, clientY * 0.25]);
 		}
 
@@ -109,7 +134,7 @@ export default function Hero() {
 		return () => {
 			el.current?.removeEventListener("pointermove", handlePointerMove);
 		};
-	}, []);
+	}, [isInitialized]);
 
 	return (
 		<div className={styles["wrapper"]}>
@@ -123,10 +148,14 @@ export default function Hero() {
 						/>
 					</svg>
 				</span>
-				<span className={styles["c-about"]}>
-					We embrace the art of living nature bringing you closer to the beauty of
-					the natural world, whether in your indoor or outdoor spaces.
-				</span>
+				<div className={styles["c-content"]}>
+					<h1 className={styles["c-title-text"]}>
+						The art of living nature
+					</h1>
+					<p className={styles["c-subtitle"]}>
+						We embrace the art of living nature, seamlessly blending the beauty of the natural world into your indoor and outdoor spaces.
+					</p>
+				</div>
 			</div>
 			<div ref={el} className={styles["canvas"]}></div>
 		</div>
