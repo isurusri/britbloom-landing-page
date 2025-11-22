@@ -71,7 +71,7 @@ const Navbar = () => {
                 {/* Right side - Shop Now (desktop) and Mobile Menu Button */}
                 <div className="flex items-center gap-4 ml-auto">
                     {/* Shop Now Button - Hidden on mobile and tablet */}
-                    <a href="https://shop.britblooms.com" className={`${styles["shop-now"]} hidden lg:block`}>
+                    <a href="/shop" className={`${styles["shop-now"]} hidden lg:block`}>
                         SHOP NOW
                     </a>
 
@@ -121,7 +121,7 @@ const Navbar = () => {
                         CONTACT
                     </a>
                     <div className={styles["navbar__mobile-shop"]}>
-                        <a href="https://shop.britblooms.com" className={styles["shop-now"]}>SHOP NOW</a>
+                        <a href="/shop" className={styles["shop-now"]}>SHOP NOW</a>
                     </div>
                 </div>
             </div>
