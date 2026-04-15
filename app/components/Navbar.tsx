@@ -7,23 +7,19 @@ import styles from "./Navbar.module.scss";
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isNavbarHidden, setIsNavbarHidden] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [mouseY, setMouseY] = useState(0);
-
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
 
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
 
-            // Show navbar when at the top or when mouse is near top
+            setIsScrolled(currentScrollY > 24);
+
             if (currentScrollY < 10 || mouseY < 100) {
                 setIsNavbarHidden(false);
-            }
-            // Hide navbar when scrolling down, show when scrolling up
-            else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
                 setIsNavbarHidden(true);
             } else if (currentScrollY < lastScrollY) {
                 setIsNavbarHidden(false);
@@ -36,94 +32,88 @@ const Navbar = () => {
             setMouseY(e.clientY);
         };
 
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        window.addEventListener('mousemove', handleMouseMove, { passive: true });
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
         return () => {
-            window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("mousemove", handleMouseMove);
         };
     }, [lastScrollY, mouseY]);
 
+    const navClass = [
+        styles.navbar,
+        isNavbarHidden ? styles["navbar--hidden"] : "",
+        isScrolled ? styles["navbar--scrolled"] : "",
+    ]
+        .filter(Boolean)
+        .join(" ");
+
     return (
         <>
-            <header className={`${styles["navbar"]} ${isNavbarHidden ? styles["navbar--hidden"] : ""} flex items-center p-2 text-white relative`}>
-                {/* Left side - Desktop Navigation Links (hidden on mobile and tablet) */}
-                <div className={`${styles["navbar__links"]} hidden lg:flex gap-8 flex-1`}>
-                    <a href="#products" className={`${styles["navbar__link"]} hover:text-primary transition-colors`}>PRODUCTS</a>
-                    <a href="#about" className={`${styles["navbar__link"]} hover:text-primary transition-colors`}>ABOUT</a>
-                    <a href="#contact" className={`${styles["navbar__link"]} hover:text-primary transition-colors`}>CONTACT</a>
-                </div>
+            <header className={navClass}>
+                {/* Left — desktop nav links */}
+                <nav className={styles.nav}>
+                    <a href="#products" className={styles.navLink}>Products</a>
+                    <a href="#about" className={styles.navLink}>About</a>
+                    <a href="#contact" className={styles.navLink}>Contact</a>
+                </nav>
 
-                {/* Center - Logo - Always visible */}
-                <div className={`${styles["navbar__logo-container"]} absolute left-1/2 transform -translate-x-1/2`}>
-                    <a href="#hero" className={styles["navbar__logo"]}>
-                        <Image
-                            alt="BritBlooms Logo"
-                            src="/images/britblooms.svg"
-                            width={60}
-                            height={60}
-                            className="w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20"
-                        />
+                {/* Center — logo */}
+                <a href="#hero" className={styles.logo} aria-label="BritBlooms home">
+                    <Image
+                        src="/images/britblooms.svg"
+                        alt="BritBlooms"
+                        width={36}
+                        height={36}
+                        className={styles.logoImg}
+                    />
+                </a>
+
+                {/* Right — shop + hamburger */}
+                <div className={styles.right}>
+                    <a href="https://shop.britblooms.com" className={styles.shopBtn}>
+                        Shop Now
                     </a>
-                </div>
-
-                {/* Right side - Shop Now (desktop) and Mobile Menu Button */}
-                <div className="flex items-center gap-4 ml-auto">
-                    {/* Shop Now Button - Hidden on mobile and tablet */}
-                    <a href="https://shop.britblooms.com" className={`${styles["shop-now"]} hidden lg:block`}>
-                        SHOP NOW
-                    </a>
-
-                    {/* Mobile Menu Button - Right side */}
                     <button
-                        className={`${styles["navbar__menu-button"]} lg:hidden`}
-                        onClick={toggleMenu}
+                        className={styles.hamburgerBtn}
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
                         aria-label="Toggle menu"
+                        aria-expanded={isMenuOpen}
                     >
-                        <span className={`${styles["hamburger"]} ${isMenuOpen ? styles["hamburger--active"] : ""}`}>
-                            <span></span>
-                            <span></span>
-                            <span></span>
+                        <span className={`${styles.hamburger} ${isMenuOpen ? styles["hamburger--open"] : ""}`}>
+                            <span />
+                            <span />
+                            <span />
                         </span>
                     </button>
                 </div>
             </header>
 
-            {/* Mobile Menu Overlay - Outside header */}
-            <div className={`${styles["navbar__mobile-menu"]} ${isMenuOpen ? styles["navbar__mobile-menu--open"] : ""} lg:hidden`}>
-                {/* Close button overlay */}
-                <div
-                    className={styles["navbar__mobile-overlay"]}
-                    onClick={() => setIsMenuOpen(false)}
-                ></div>
-
-                <div className={styles["navbar__mobile-content"]}>
+            {/* Mobile fullscreen menu */}
+            <div
+                className={`${styles.mobileMenu} ${isMenuOpen ? styles["mobileMenu--open"] : ""}`}
+                aria-hidden={!isMenuOpen}
+            >
+                <div className={styles.mobileBackdrop} onClick={() => setIsMenuOpen(false)} />
+                <nav className={styles.mobileNav}>
+                    {["products", "about", "contact"].map((id) => (
+                        <a
+                            key={id}
+                            href={`#${id}`}
+                            className={styles.mobileLink}
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            {id.charAt(0).toUpperCase() + id.slice(1)}
+                        </a>
+                    ))}
                     <a
-                        href="#products"
-                        className={`${styles["navbar__mobile-link"]} hover:text-primary transition-colors`}
-                        onClick={() => setIsMenuOpen(false)}
+                        href="https://shop.britblooms.com"
+                        className={styles.mobileShop}
                     >
-                        PRODUCTS
+                        Shop Now
                     </a>
-                    <a
-                        href="#about"
-                        className={`${styles["navbar__mobile-link"]} hover:text-primary transition-colors`}
-                        onClick={() => setIsMenuOpen(false)}
-                    >
-                        ABOUT
-                    </a>
-                    <a
-                        href="#contact"
-                        className={`${styles["navbar__mobile-link"]} hover:text-primary transition-colors`}
-                        onClick={() => setIsMenuOpen(false)}
-                    >
-                        CONTACT
-                    </a>
-                    <div className={styles["navbar__mobile-shop"]}>
-                        <a href="https://shop.britblooms.com" className={styles["shop-now"]}>SHOP NOW</a>
-                    </div>
-                </div>
+                </nav>
             </div>
         </>
     );

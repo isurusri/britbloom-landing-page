@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { Figtree, Baskervville, Italianno } from "next/font/google";
+
+export const metadata: Metadata = {
+	title: "Britblooms",
+	description: "The art of living nature — bespoke botanical designs for indoor and outdoor spaces.",
+};
 
 import "./globals.scss";
 
@@ -20,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<link rel="apple-touch-icon" href="/images/favicon_io/apple-touch-icon.png" />
 				<link rel="manifest" href="/images/favicon_io/site.webmanifest" />
 			</head>
-			<body>{children}</body>
+			<body suppressHydrationWarning>{children}</body>
 		</html>
 	);
 }

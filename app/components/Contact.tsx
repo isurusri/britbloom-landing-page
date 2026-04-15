@@ -1,117 +1,120 @@
+"use client";
+
+import Script from "next/script";
 import styles from "./Contact.module.scss";
 
+declare global {
+    interface Window {
+        Calendly?: {
+            initPopupWidget: (opts: { url: string }) => void;
+        };
+    }
+}
+
+const CALENDLY_URL =
+    "https://calendly.com/britblooms-support?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=0b3c49&text_color=d9c8a9&primary_color=3e8e7e";
+
 export default function Contact() {
+    const openCalendly = () => {
+        window.Calendly?.initPopupWidget({ url: CALENDLY_URL });
+    };
+
     return (
-        <div className={styles["wrapper"]}>
+        <div className={styles.wrapper}>
+            <section className={styles.section}>
+                <div className={styles.inner}>
 
-            <section className={`${styles["contact"]} py-20 px-8`}>
-                <div className="max-w-7xl mx-auto">
-                    {/* Hero Section */}
-                    <div className={`${styles["contact__hero"]} text-center mb-16`}>
-                        <h2 className={`${styles["contact__title"]} text-5xl font-bold mb-6 text-white`}>
-                            Let's Connect
+                    {/* Left — editorial heading + contact info */}
+                    <div className={styles.leftCol}>
+                        <span className={styles.eyebrow}>Visit Us</span>
+                        <h2 className={styles.heading}>
+                            Let&rsquo;s meet<br />in&nbsp;person
                         </h2>
-                        <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-                            For inquiries about Britblooms services or products, whether retail or wholesale, please contact us. Let us bring you closer to nature the art of living with nature.
+
+                        <p className={styles.subtext}>
+                            Choose a time that works for you and we&rsquo;ll welcome you
+                            in person. Whether you&rsquo;re planning a bespoke installation
+                            or simply want to explore our work, we&rsquo;d love to meet.
                         </p>
-                    </div>
 
-                    {/* Main Contact Grid */}
-                    <div className={`${styles["contact__main"]} grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16`}>
-                        {/* Contact Methods */}
-                        <div className={`${styles["contact__methods"]} lg:col-span-1`}>
-                            <div className={`${styles["method__card"]} bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-6`}>
-                                <div className="w-16 h-16 bg-gradient-to-br from-primary/30 to-accent/30 rounded-2xl flex items-center justify-center mb-6">
-                                    <span className="text-3xl">📧</span>
-                                </div>
-                                <h3 className="text-xl font-semibold text-white mb-3">Email Us</h3>
-                                <p className="text-gray-300 mb-4">Get detailed responses within 24 hours</p>
-                                <div className="text-primary font-semibold"><a href="mailto:info@britblooms.com">info@britblooms.com</a></div>
+                        <div className={styles.contactItems}>
+                            <div className={styles.contactItem}>
+                                <span className={styles.contactLabel}>Email</span>
+                                <a href="mailto:info@britblooms.com" className={styles.contactValue}>
+                                    info@britblooms.com
+                                </a>
                             </div>
-
-                            <div className={`${styles["method__card"]} bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-6`}>
-                                <div className="w-16 h-16 bg-gradient-to-br from-accent/30 to-primary/30 rounded-2xl flex items-center justify-center mb-6">
-                                    <span className="text-3xl">📞</span>
-                                </div>
-                                <h3 className="text-xl font-semibold text-white mb-3">Call Us</h3>
-                                <p className="text-gray-300 mb-4">Speak directly with our experts</p>
-                                <div className="text-primary font-semibold"><a href="tel:+441165095161">+44 11 6509 5161</a></div>
+                            <div className={styles.contactItem}>
+                                <span className={styles.contactLabel}>Phone</span>
+                                <a href="tel:+441165095161" className={styles.contactValue}>
+                                    +44 11 6509 5161
+                                </a>
                             </div>
-
-                            {/* <div className={`${styles["method__card"]} bg-white/10 backdrop-blur-sm rounded-2xl p-8`}>
-                                <div className="w-16 h-16 bg-gradient-to-br from-neutral/30 to-accent/30 rounded-2xl flex items-center justify-center mb-6">
-                                    <span className="text-3xl">📍</span>
-                                </div>
-                                <h3 className="text-xl font-semibold text-white mb-3">Visit Us</h3>
-                                <p className="text-gray-300 mb-4">Come see our showroom</p>
-                                <div className="text-primary font-semibold">123 Aquatic Street<br />London, UK SW1A 1AA</div>
-                            </div> */}
                         </div>
 
-                        {/* Contact Form */}
-                        <div className={`${styles["contact__form"]} lg:col-span-2`}>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
-                                <h3 className="text-2xl font-semibold text-white mb-8">Send us a message</h3>
-                                <form className="space-y-6">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div>
-                                            <label className="block text-white text-sm font-semibold mb-2">First Name</label>
-                                            <input
-                                                type="text"
-                                                className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:border-primary transition-colors"
-                                                placeholder="John"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-white text-sm font-semibold mb-2">Last Name</label>
-                                            <input
-                                                type="text"
-                                                className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:border-primary transition-colors"
-                                                placeholder="Doe"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label className="block text-white text-sm font-semibold mb-2">Email Address</label>
-                                        <input
-                                            type="email"
-                                            className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:border-primary transition-colors"
-                                            placeholder="john.doe@example.com"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-white text-sm font-semibold mb-2">Subject</label>
-                                        <select className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white focus:outline-none focus:border-primary transition-colors">
-                                            <option value="">Select a topic</option>
-                                            <option value="general">General Inquiry</option>
-                                            <option value="products">Product Information</option>
-                                            <option value="support">Technical Support</option>
-                                            <option value="consultation">Free Consultation</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="block text-white text-sm font-semibold mb-2">Message</label>
-                                        <textarea
-                                            rows={5}
-                                            className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:border-primary transition-colors resize-none"
-                                            placeholder="Tell us about your aquatic project or any questions you have..."
-                                        ></textarea>
-                                    </div>
-                                    <button
-                                        type="submit"
-                                        className="w-full bg-primary text-white py-4 rounded-xl font-semibold hover:bg-primary/80 transition-all hover:scale-105"
+                        <div className={styles.accentLine} aria-hidden="true" />
+                    </div>
+
+                    {/* Right — appointment card */}
+                    <div className={styles.rightCol}>
+                        <div className={styles.card}>
+
+                            {/* Subtle dot-grid decoration */}
+                            <div className={styles.cardGrid} aria-hidden="true" />
+
+                            <div className={styles.cardInner}>
+                                <span className={styles.cardLabel}>Free Gallery Visit</span>
+
+                                <p className={styles.cardTitle}>
+                                    30 &#8209; minute<br />session
+                                </p>
+
+                                <ul className={styles.cardFeatures}>
+                                    <li><span>—</span> Walk through your space &amp; vision</li>
+                                    <li><span>—</span> Explore our portfolio in person</li>
+                                    <li><span>—</span> Receive a tailored recommendation</li>
+                                </ul>
+
+                                <button className={styles.scheduleBtn} onClick={openCalendly}>
+                                    <svg
+                                        className={styles.calIcon}
+                                        width="15" height="15"
+                                        viewBox="0 0 15 15" fill="none"
+                                        aria-hidden="true"
                                     >
-                                        Send Message
-                                    </button>
-                                </form>
+                                        <rect x="0.75" y="2.25" width="13.5" height="12" rx="1.25" stroke="currentColor" strokeWidth="1.1" />
+                                        <path d="M0.75 5.75h13.5" stroke="currentColor" strokeWidth="1.1" />
+                                        <path d="M4.5 0.75v3M10.5 0.75v3" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
+                                    </svg>
+                                    Book a Meeting
+                                </button>
+
+                                <p className={styles.cardNote}>No commitment &nbsp;·&nbsp; Completely free</p>
                             </div>
+
                         </div>
                     </div>
-
 
                 </div>
+
+                {/* Footer strip */}
+                <footer className={styles.footer}>
+                    <span className={styles.footerBrand}>© 2025 BritBlooms</span>
+                    <span className={styles.footerTagline}>The art of living nature</span>
+                    <a href="https://shop.britblooms.com" className={styles.footerShop}>
+                        Visit Shop →
+                    </a>
+                </footer>
+
             </section>
 
+            {/* Calendly assets — load after page is interactive */}
+            {/* eslint-disable-next-line @next/next/no-css-tags */}
+            <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css" />
+            <Script
+                src="https://assets.calendly.com/assets/external/widget.js"
+                strategy="lazyOnload"
+            />
         </div>
     );
 }

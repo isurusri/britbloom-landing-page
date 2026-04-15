@@ -1,123 +1,407 @@
+// ─── Wrapper ──────────────────────────────────────────────────────────────────
+
 .wrapper {
-	padding: 1rem;
-
+	position: relative;
 	display: grid;
-
 	width: 100%;
 	min-height: 100vh;
-	position: relative;
+	padding: 1rem;
 
+	// Directional overlay — dark left half for text legibility,
+	// transparent right so the fluid sim breathes
 	&::before {
 		content: '';
 		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: linear-gradient(135deg,
-				rgba(0, 0, 0, 0.4) 0%,
-				rgba(0, 0, 0, 0.2) 30%,
-				rgba(0, 0, 0, 0.1) 60%,
-				rgba(0, 0, 0, 0.3) 100%);
+		inset: 1rem;
+		border-radius: 1.4rem;
+		background:
+			linear-gradient(
+				108deg,
+				rgba(5, 22, 28, 0.82) 0%,
+				rgba(8, 38, 48, 0.55) 35%,
+				rgba(0, 0, 0, 0.08) 58%,
+				transparent 72%
+			),
+			linear-gradient(
+				to bottom,
+				rgba(0, 0, 0, 0.18) 0%,
+				transparent 18%,
+				transparent 62%,
+				rgba(0, 0, 0, 0.72) 100%
+			);
 		z-index: 1;
 		pointer-events: none;
 	}
 }
 
-.c {
-	order: 1;
-	grid-area: 1 / 1;
-
-	display: grid;
-	grid-template-columns: repeat(8, 1fr);
-	align-content: space-between;
-
-	padding: 2.8rem 2rem;
-	padding-top: 6rem;
-
-	height: 100%;
-
-	pointer-events: none;
-
-	&-title {
-		grid-column: 1 / 9;
-		z-index: 2;
-		justify-self: center;
-		text-align: center;
-
-		margin: 2.8em 0;
-		width: 100%;
-		max-width: 1440px;
-
-		svg {
-			width: 100%;
-			height: auto;
-			min-height: 60px;
-		}
-	}
-
-	&-content {
-		grid-column: 1 / 9;
-		z-index: 2;
-		justify-self: center;
-		text-align: center;
-		width: 100%;
-		max-width: 800px;
-		margin-top: 2rem;
-	}
-
-	&-title-text {
-		font-family: var(--font-italianno);
-		font-size: 4.5rem;
-		line-height: 1.2em;
-		color: white;
-		font-weight: 400;
-		margin: 0 0 1rem 0;
-
-		// Mobile responsive font size
-		@media (max-width: 768px) {
-			font-size: 4rem;
-			line-height: 1.3em;
-		}
-
-		@media (max-width: 480px) {
-			font-size: 4rem;
-			line-height: 1.4em;
-		}
-	}
-
-	&-subtitle {
-		font-family: var(--font-figtree);
-		font-size: 1.2rem;
-		line-height: 1.4em;
-		color: rgba(255, 255, 255, 0.9);
-		font-weight: 400;
-		margin: 0;
-		max-width: 600px;
-		margin-left: auto;
-		margin-right: auto;
-
-		// Mobile responsive font size
-		@media (max-width: 768px) {
-			font-size: 1.2rem;
-			line-height: 1.5em;
-			max-width: 500px;
-		}
-
-		@media (max-width: 480px) {
-			font-size: 1.2rem;
-			line-height: 1.5em;
-			max-width: 400px;
-		}
-	}
-}
+// ─── Canvas ───────────────────────────────────────────────────────────────────
 
 .canvas {
 	order: 0;
 	grid-area: 1 / 1;
-
 	margin: 0;
-
 	border-radius: 1.4rem;
 	overflow: hidden;
+	min-height: calc(100vh - 2rem);
+}
+
+// ─── Content (3-row grid: top / stage / bottom) ───────────────────────────────
+
+.content {
+	order: 1;
+	grid-area: 1 / 1;
+	z-index: 2;
+	pointer-events: none;
+
+	display: grid;
+	grid-template-rows: 1fr auto;
+	min-height: calc(100vh - 2rem);
+}
+
+// ─── Left accent line (editorial column marker) ───────────────────────────────
+
+.left-accent {
+	position: absolute;
+	left: 4rem;
+	top: 18%;
+	height: 64%;
+	width: 1px;
+	background: linear-gradient(
+		to bottom,
+		transparent 0%,
+		rgba(217, 200, 169, 0.28) 18%,
+		rgba(217, 200, 169, 0.28) 82%,
+		transparent 100%
+	);
+	z-index: 3;
+	pointer-events: none;
+	animation: accentDraw 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+	animation-delay: 0.2s;
+
+	@media (max-width: 900px) {
+		display: none;
+	}
+}
+
+// ─── Stage (tagline area) ─────────────────────────────────────────────────────
+
+.stage {
+	display: flex;
+	align-items: center;
+	padding: 0 3rem 0 5.5rem;
+
+	@media (max-width: 900px) {
+		padding: 0 2rem;
+		justify-content: center;
+		text-align: center;
+	}
+}
+
+.stage-inner {
+	display: flex;
+	flex-direction: column;
+	max-width: 680px;
+}
+
+.eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.65rem;
+	margin: 0 0 1.6rem;
+	animation: slideInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+	animation-delay: 0.3s;
+
+	@media (max-width: 900px) {
+		justify-content: center;
+		animation-name: fadeUp;
+	}
+}
+
+.eyebrow-icon {
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	border: 1px solid rgba(217, 200, 169, 0.35);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.28rem;
+	flex-shrink: 0;
+}
+
+.eyebrow-name {
+	font-family: var(--font-figtree);
+	font-size: 0.68rem;
+	font-weight: 600;
+	letter-spacing: 0.32em;
+	color: var(--color-primary);
+	text-transform: uppercase;
+}
+
+.tagline {
+	font-family: var(--font-italianno);
+	font-size: 8rem;
+	line-height: 1.0;
+	font-weight: 400;
+	margin: 0;
+	text-shadow: 0 4px 40px rgba(0, 0, 0, 0.25);
+
+	@media (max-width: 1200px) {
+		font-size: 7rem;
+	}
+
+	@media (max-width: 900px) {
+		font-size: 5.8rem;
+	}
+
+	@media (max-width: 480px) {
+		font-size: 4.4rem;
+	}
+}
+
+.line1 {
+	display: block;
+	color: white;
+	animation: slideInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+	animation-delay: 0.5s;
+
+	@media (max-width: 900px) {
+		animation-name: fadeUp;
+	}
+}
+
+.line2 {
+	display: block;
+	// Warm sand tone — differentiates the two lines, creates luxury contrast
+	color: var(--color-primary);
+	// Editorial indent: second line offset echoes classical typesetting
+	padding-left: 3rem;
+	animation: slideInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+	animation-delay: 0.7s;
+
+	@media (max-width: 900px) {
+		padding-left: 0;
+		animation-name: fadeUp;
+	}
+}
+
+// ─── Bottom bar (subtitle left / CTA right) ───────────────────────────────────
+
+.bottom-bar {
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: end;
+	gap: 2.5rem;
+	padding: 2rem 3.5rem 2.5rem 5.5rem;
+	animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+	animation-delay: 1s;
+
+	@media (max-width: 900px) {
+		grid-template-columns: 1fr;
+		gap: 1.2rem;
+		padding: 1.8rem 2rem 2.2rem;
+		text-align: center;
+	}
+}
+
+.bar-divider {
+	width: 1px;
+	height: 3.5rem;
+	background: linear-gradient(
+		to bottom,
+		transparent 0%,
+		rgba(255, 255, 255, 0.14) 30%,
+		rgba(255, 255, 255, 0.14) 70%,
+		transparent 100%
+	);
+	align-self: center;
+
+	@media (max-width: 900px) {
+		display: none;
+	}
+}
+
+.subtitle {
+	font-family: var(--font-baskervville);
+	font-style: italic;
+	font-size: 0.95rem;
+	line-height: 1.75;
+	color: rgba(255, 255, 255, 0.62);
+	margin: 0;
+	letter-spacing: 0.025em;
+	max-width: 340px;
+
+	@media (max-width: 900px) {
+		max-width: none;
+		font-size: 0.9rem;
+	}
+}
+
+// ─── CTA group ────────────────────────────────────────────────────────────────
+
+.cta-group {
+	display: flex;
+	gap: 0.75rem;
+	align-items: center;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	pointer-events: auto;
+
+	@media (max-width: 900px) {
+		justify-content: center;
+	}
+
+	@media (max-width: 400px) {
+		flex-direction: column;
+		align-items: stretch;
+	}
+}
+
+.cta-primary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5em;
+	background: var(--color-primary);
+	color: var(--color-secondary);
+	padding: 0.75em 2em;
+	border-radius: 3px;
+	font-family: var(--font-figtree);
+	font-size: 0.77rem;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+	white-space: nowrap;
+
+	&:hover {
+		background: white;
+		color: var(--color-secondary);
+		transform: translateY(-2px);
+		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+	}
+
+	&:active { transform: translateY(0); }
+}
+
+.cta-secondary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
+	color: rgba(255, 255, 255, 0.78);
+	padding: 0.75em 2em;
+	border-radius: 3px;
+	border: 1px solid rgba(255, 255, 255, 0.28);
+	font-family: var(--font-figtree);
+	font-size: 0.77rem;
+	font-weight: 400;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+	white-space: nowrap;
+
+	&:hover {
+		border-color: var(--color-primary);
+		color: var(--color-primary);
+		transform: translateY(-2px);
+	}
+
+	&:active { transform: translateY(0); }
+}
+
+// ─── Scroll indicator (right side, vertical) ──────────────────────────────────
+
+.scroll-indicator {
+	position: absolute;
+	right: 2.8rem;
+	top: 50%;
+	transform: translateY(-50%);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.9rem;
+	z-index: 3;
+	pointer-events: none;
+	animation: heroFadeIn 1s ease both;
+	animation-delay: 1.6s;
+
+	@media (max-width: 900px) {
+		display: none;
+	}
+}
+
+.scroll-text {
+	writing-mode: vertical-rl;
+	font-family: var(--font-figtree);
+	font-size: 0.58rem;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.32);
+}
+
+.scroll-line-wrap {
+	width: 1px;
+	height: 4rem;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+}
+
+.scroll-line {
+	width: 1px;
+	height: 4rem;
+	background: linear-gradient(
+		to bottom,
+		var(--color-primary),
+		transparent
+	);
+	transform: translateY(-100%);
+	animation: lineSlide 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	animation-delay: 2.2s;
+}
+
+// ─── Keyframes ────────────────────────────────────────────────────────────────
+
+@keyframes accentDraw {
+	from { transform: scaleY(0); transform-origin: top; }
+	to   { transform: scaleY(1); transform-origin: top; }
+}
+
+@keyframes slideInLeft {
+	from {
+		opacity: 0;
+		transform: translateX(-52px);
+		filter: blur(3px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+		filter: blur(0);
+	}
+}
+
+@keyframes fadeUp {
+	from { opacity: 0; transform: translateY(28px); }
+	to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes slideUp {
+	from { opacity: 0; transform: translateY(24px); }
+	to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes heroFadeIn {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+
+@keyframes lineSlide {
+	0%   { transform: translateY(-100%); }
+	35%  { transform: translateY(0);     }
+	65%  { transform: translateY(0);     }
+	100% { transform: translateY(100%);  }
 }

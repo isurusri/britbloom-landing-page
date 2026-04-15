@@ -1,109 +1,213 @@
+// ─── Wrapper ──────────────────────────────────────────────────────────────────
+
 .wrapper {
 	padding: 1rem;
-
-	display: grid;
-
 	width: 100%;
-	min-height: 100vh;
 }
 
-.about {
-	background: var(--color-neutral);
-	min-height: 100vh;
-	display: flex;
-	align-items: center;
+// ─── Section — warm parchment (light contrast against dark sections) ──────────
+
+.section {
+	background: #f0ebe0;
 	border-radius: 1.4rem;
 	overflow: hidden;
-	padding-top: 8rem;
+	min-height: 100vh;
+	display: grid;
+	grid-template-columns: 1fr 44%;
+	align-items: stretch;
 
-	&__hero {
-		// Hero section styles
-	}
-
-	&__title {
-		position: relative;
-
-		&::after {
-			content: '';
-			position: absolute;
-			bottom: -0.5rem;
-			left: 50%;
-			transform: translateX(-50%);
-			width: 4rem;
-			height: 0.25rem;
-			background: var(--color-primary);
-		}
-	}
-
-	&__content {
-		// Main content grid
-	}
-
-	&__slideshow {
-		// Slideshow section
-	}
-
-	&__image {
-		// Large image section
-	}
-
-	.slideshow {
-		&__container {
-			position: relative;
-			overflow: hidden;
-			transition: all 0.5s ease;
-
-			// Smooth image transitions
-			img {
-				transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-			}
-		}
-	}
-
-	&__text {
-		// Text content section
-	}
-
-	&__features {
-		// Features list
-	}
-
-	&__stats {
-		// Statistics grid
-	}
-
-	&__team {
-		// Team section
-	}
-
-	.image {
-		&__badge {
-			animation: float 3s ease-in-out infinite;
-		}
-	}
-
-	.team {
-		&__member {
-			transition: all 0.3s ease;
-			border: 1px solid rgba(255, 255, 255, 0.1);
-
-			&:hover {
-				transform: translateY(-8px);
-				box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-				border-color: var(--color-primary);
-			}
-		}
+	@media (max-width: 1024px) {
+		grid-template-columns: 1fr;
 	}
 }
 
-@keyframes float {
+// ─── Text column (left) ───────────────────────────────────────────────────────
 
-	0%,
-	100% {
-		transform: translateY(0px);
+.textCol {
+	padding: 7rem 4.5rem 7rem 5.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.6rem;
+	justify-content: center;
+
+	@media (max-width: 1200px) {
+		padding: 6rem 3.5rem 6rem 4rem;
 	}
 
-	50% {
-		transform: translateY(-10px);
+	@media (max-width: 1024px) {
+		padding: 5.5rem 2.5rem 3.5rem;
+		order: 2;
+	}
+}
+
+.eyebrow {
+	font-family: var(--font-figtree);
+	font-size: 0.6rem;
+	font-weight: 600;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: var(--color-neutral);
+}
+
+.heading {
+	font-family: var(--font-italianno);
+	font-size: 5rem;
+	font-weight: 400;
+	color: var(--color-secondary);
+	line-height: 1.05;
+	margin: 0;
+
+	@media (max-width: 1200px) { font-size: 4.2rem; }
+	@media (max-width: 900px)  { font-size: 3.2rem; }
+}
+
+.lead {
+	font-family: var(--font-baskervville);
+	font-style: italic;
+	font-size: 1rem;
+	line-height: 1.78;
+	color: var(--color-secondary);
+	margin: 0;
+}
+
+.body {
+	font-family: var(--font-baskervville);
+	font-size: 0.88rem;
+	line-height: 1.78;
+	color: rgba(11, 60, 73, 0.68);
+	margin: 0;
+}
+
+// ─── Pillars ──────────────────────────────────────────────────────────────────
+
+.pillars {
+	display: flex;
+	flex-direction: column;
+	border-top: 1px solid rgba(11, 60, 73, 0.12);
+	margin-top: 0.4rem;
+}
+
+.pillar {
+	display: grid;
+	grid-template-columns: 7.5rem 1fr;
+	gap: 1.5rem;
+	align-items: baseline;
+	padding: 1.1rem 0;
+	border-bottom: 1px solid rgba(11, 60, 73, 0.12);
+}
+
+.pillarLabel {
+	font-family: var(--font-figtree);
+	font-size: 0.6rem;
+	font-weight: 700;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--color-neutral);
+}
+
+.pillarBody {
+	font-family: var(--font-baskervville);
+	font-size: 0.85rem;
+	line-height: 1.65;
+	color: rgba(11, 60, 73, 0.62);
+	margin: 0;
+}
+
+// Mission blockquote
+.mission {
+	font-family: var(--font-italianno);
+	font-size: 1.55rem;
+	color: var(--color-secondary);
+	line-height: 1.4;
+	margin: 0.5rem 0 0;
+	padding-left: 1.4rem;
+	border-left: 2px solid var(--color-primary);
+	font-style: normal;
+}
+
+// ─── Image column (right) ─────────────────────────────────────────────────────
+
+.imageCol {
+	position: relative;
+	min-height: 70vh;
+
+	@media (max-width: 1024px) {
+		min-height: 55vw;
+		order: 1;
+	}
+}
+
+.imageWrap {
+	position: absolute;
+	inset: 0;
+}
+
+.slide {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	transition: opacity 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+
+	&--active { opacity: 1; }
+}
+
+.slideImg {
+	object-fit: cover;
+}
+
+.imageOverlay {
+	position: absolute;
+	inset: 0;
+	// Feather into the parchment on the left, dark gradient at the bottom
+	background:
+		linear-gradient(to right, #f0ebe0 0%, transparent 14%),
+		linear-gradient(to top, rgba(0, 0, 0, 0.52) 0%, transparent 32%);
+	z-index: 1;
+
+	@media (max-width: 1024px) {
+		background:
+			linear-gradient(to bottom, #f0ebe0 0%, transparent 12%),
+			linear-gradient(to top, #f0ebe0 0%, transparent 18%);
+	}
+}
+
+.imageCaption {
+	position: absolute;
+	bottom: 2.2rem;
+	left: 2rem;
+	right: 2rem;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.captionTitle {
+	font-family: var(--font-baskervville);
+	font-style: italic;
+	font-size: 0.85rem;
+	color: rgba(255, 255, 255, 0.78);
+	letter-spacing: 0.03em;
+}
+
+.captionDots {
+	display: flex;
+	gap: 0.4rem;
+}
+
+.dot {
+	width: 0.28rem;
+	height: 0.28rem;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.32);
+	border: none;
+	cursor: pointer;
+	transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+	padding: 0;
+
+	&--active {
+		background: white;
+		width: 1.2rem;
+		border-radius: 0.15rem;
 	}
 }
