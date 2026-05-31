@@ -26,6 +26,7 @@
   },
   "include": [
     "next-env.d.ts",
+    "scss.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "next.config.js",
