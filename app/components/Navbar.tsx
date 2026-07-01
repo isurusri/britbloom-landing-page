@@ -54,6 +54,7 @@ const Navbar = () => {
             <header className={navClass}>
                 {/* Left — desktop nav links */}
                 <nav className={styles.nav}>
+                    <a href="#creations" className={styles.navLink}>Creations</a>
                     <a href="#products" className={styles.navLink}>Products</a>
                     <a href="#about" className={styles.navLink}>About</a>
                     <a href="#contact" className={styles.navLink}>Contact</a>
@@ -97,7 +98,7 @@ const Navbar = () => {
             >
                 <div className={styles.mobileBackdrop} onClick={() => setIsMenuOpen(false)} />
                 <nav className={styles.mobileNav}>
-                    {["products", "about", "contact"].map((id) => (
+                    {["creations", "products", "about", "contact"].map((id) => (
                         <a
                             key={id}
                             href={`#${id}`}

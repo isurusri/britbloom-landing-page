@@ -1,9 +1,8 @@
-import Link from "next/link";
-import Image from "next/image";
 import Hero from "./hero";
 import Navbar from "./components/Navbar";
 import Products from "./components/Products";
 import About from "./components/About";
+import Creations from "./components/Creations";
 import Contact from "./components/Contact";
 
 import styles from "./page.module.scss";
@@ -14,6 +13,9 @@ const Home = () => {
 			<Navbar />
 			<section id="hero">
 				<Hero />
+			</section>
+			<section id="creations">
+				<Creations />
 			</section>
 			<section id="products">
 				<Products />
