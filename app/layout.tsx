@@ -8,12 +8,13 @@ export const metadata: Metadata = {
 
 import "./globals.scss";
 
-const figtree = Figtree({ variable: "--font-figtree" });
-const baskervville = Baskervville({ variable: "--font-baskervville" });
+const figtree = Figtree({ variable: "--font-figtree", subsets: ["latin"], display: "swap" });
+const baskervville = Baskervville({ variable: "--font-baskervville", subsets: ["latin"], weight: "400", display: "swap" });
 const italianno = Italianno({
 	variable: "--font-italianno",
 	weight: "400",
-	subsets: ["latin"]
+	subsets: ["latin"],
+	display: "swap",
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

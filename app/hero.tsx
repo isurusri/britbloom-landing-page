@@ -80,7 +80,7 @@ export default function Hero() {
 			if (!canvas.current) return;
 
 			const textureInfo = await createTextureAsync(canvas.current.gl, {
-				src: "/images/bg4i.jpg",
+				src: "/images/bg4i.webp",
 				min: canvas.current.gl.LINEAR,
 				mag: canvas.current.gl.LINEAR,
 				flipY: canvas.current.gl.UNPACK_FLIP_Y_WEBGL,

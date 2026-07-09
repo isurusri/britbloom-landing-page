@@ -1,9 +1,11 @@
+import dynamic from "next/dynamic";
 import Hero from "./hero";
 import Navbar from "./components/Navbar";
-import Products from "./components/Products";
-import About from "./components/About";
-import Creations from "./components/Creations";
-import Contact from "./components/Contact";
+
+const Creations = dynamic(() => import("./components/Creations"));
+const Products = dynamic(() => import("./components/Products"));
+const About = dynamic(() => import("./components/About"));
+const Contact = dynamic(() => import("./components/Contact"));
 
 import styles from "./page.module.scss";
 

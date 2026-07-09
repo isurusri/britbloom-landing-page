@@ -5,13 +5,13 @@ import Image from "next/image";
 import styles from "./Creations.module.scss";
 
 const galleryImages = [
-    { src: "/images/creations/creatation_1.JPG", alt: "Creation One"    },
-    { src: "/images/creations/creatation_2.PNG", alt: "Creation Two"    },
-    { src: "/images/creations/creatation_3.JPG", alt: "Creation Three"  },
-    { src: "/images/creations/creatation_4.JPG", alt: "Creation Four"   },
-    { src: "/images/creations/creatation_5.jpg", alt: "Creation Five"   },
-    { src: "/images/creations/creatation_6.jpg", alt: "Creation Six"    },
-    { src: "/images/creations/creatation_7.jpg", alt: "Creation Seven"  },
+    { src: "/images/creations/creatation_1.webp", alt: "Creation One"    },
+    { src: "/images/creations/creatation_2.webp", alt: "Creation Two"    },
+    { src: "/images/creations/creatation_3.webp", alt: "Creation Three"  },
+    { src: "/images/creations/creatation_4.webp", alt: "Creation Four"   },
+    { src: "/images/creations/creatation_5.webp", alt: "Creation Five"   },
+    { src: "/images/creations/creatation_6.webp", alt: "Creation Six"    },
+    { src: "/images/creations/creatation_7.webp", alt: "Creation Seven"  },
 ];
 
 const reviews = [
