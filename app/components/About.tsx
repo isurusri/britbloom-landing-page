@@ -5,12 +5,12 @@ import Image from "next/image";
 import styles from "./About.module.scss";
 
 const aboutImages = [
-    { id: 1, src: "/images/about/paludarium.png",     alt: "Paludarium Design",  title: "Paludarium Creations" },
-    { id: 2, src: "/images/about/aquascaped.png",     alt: "Aquascaped Tank",    title: "Aquascaped Tanks"     },
-    { id: 3, src: "/images/about/terrariums.png",     alt: "Terrarium Design",   title: "Terrarium Gardens"    },
-    { id: 4, src: "/images/about/verticalgarden.png", alt: "Vertical Garden",    title: "Vertical Gardens"     },
-    { id: 5, src: "/images/about/mossart .png",       alt: "Moss Art",           title: "Moss Art Designs"     },
-    { id: 6, src: "/images/about/ponds.png",          alt: "Water Features",     title: "Water Features"       },
+    { id: 1, src: "/images/about/paludarium.webp",     alt: "Paludarium Design",  title: "Paludarium Creations" },
+    { id: 2, src: "/images/about/aquascaped.webp",     alt: "Aquascaped Tank",    title: "Aquascaped Tanks"     },
+    { id: 3, src: "/images/about/terrariums.webp",     alt: "Terrarium Design",   title: "Terrarium Gardens"    },
+    { id: 4, src: "/images/about/verticalgarden.webp", alt: "Vertical Garden",    title: "Vertical Gardens"     },
+    { id: 5, src: "/images/about/mossart .webp",       alt: "Moss Art",           title: "Moss Art Designs"     },
+    { id: 6, src: "/images/about/ponds.webp",          alt: "Water Features",     title: "Water Features"       },
 ];
 
 const pillars = [

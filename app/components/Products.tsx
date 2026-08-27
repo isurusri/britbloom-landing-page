@@ -8,7 +8,7 @@ const products = [
     {
         id: 1,
         title: "Paludariums",
-        image: "/images/products/paludarium01.png",
+        image: "/images/products/paludarium01.webp",
         description: "We bring nature indoors with stunning paludarium plant designs. Blending lush greenery with flowing water, our creations capture the beauty of swamps, marshes, and rainforests — a living piece of nature to enjoy every day.",
         features: [
             "Recreates natural ecosystems like rainforests and wetlands",
@@ -21,7 +21,7 @@ const products = [
     {
         id: 2,
         title: "Aquascaped Tanks",
-        image: "/images/products/aquascaped01.png",
+        image: "/images/products/aquascaped01.webp",
         description: "Living works of art that bring the beauty of underwater landscapes into your home. Carefully arranged aquatic plants, rocks, and driftwood recreate the harmony of rivers, lakes, and aquatic gardens.",
         features: [
             "Every glance feels like a serene riverbed",
@@ -33,7 +33,7 @@ const products = [
     {
         id: 3,
         title: "Terrariums",
-        image: "/images/products/terrariums01.png",
+        image: "/images/products/terrariums01.webp",
         description: "Miniature gardens enclosed in glass, designed to replicate natural ecosystems. Soil, moss, plants, and decorative elements create a small, self-sustaining world of greenery that thrives indoors.",
         features: [
             "Calming plant presence without needing a garden",
@@ -46,7 +46,7 @@ const products = [
     {
         id: 4,
         title: "Luxury Vertical Gardens",
-        image: "/images/products/verticalgarden01.png",
+        image: "/images/products/verticalgarden01.webp",
         description: "We transform walls into living works of art with bespoke vertical gardens. Designed to bring a refined sense of nature into your interiors, our creations combine elegance, tranquility, and timeless style.",
         features: [
             "Bespoke designs tailored to your space",
@@ -59,7 +59,7 @@ const products = [
     {
         id: 5,
         title: "Premium Plant Designs & Moss Art",
-        image: "/images/products/mossart01.png",
+        image: "/images/products/mossart01.webp",
         description: "Premium plant designs and bespoke moss art that bring the calming essence of nature into your space. Each design is tailored to your style, transforming ordinary spaces into refreshing green sanctuaries.",
         features: [
             "Carefully selected greenery with aesthetic arrangements",
@@ -72,7 +72,7 @@ const products = [
     {
         id: 6,
         title: "Designer Water Features",
-        image: "/images/products/fountain01.png",
+        image: "/images/products/fountain01.webp",
         description: "Bespoke water installations that transform homes, gardens, offices, and public spaces. Designed to enhance visual appeal and create ambiance — going beyond simply providing flowing water.",
         features: [
             "Fountains in modern, classical, or abstract styles",

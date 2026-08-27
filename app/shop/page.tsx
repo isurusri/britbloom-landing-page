@@ -7,9 +7,9 @@ import styles from "./page.module.scss";
 const Shop = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const shopImages = [
-        "/images/shop/shopbg1.jpg",
-        "/images/shop/shopbg2.jpg",
-        "/images/shop/shopbg3.jpg"
+        "/images/shop/shopbg1.webp",
+        "/images/shop/shopbg2.webp",
+        "/images/shop/shopbg3.webp"
     ];
 
     useEffect(() => {
